@@ -1,0 +1,18 @@
+{
+  "name": "VinoVonk — Proefnotities",
+  "short_name": "VinoVonk",
+  "description": "WSET Level 3 proefnotities voor wijn, spirits en meer",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0f0a09",
+  "theme_color": "#c9967e",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
