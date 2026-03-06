@@ -56,7 +56,7 @@ export default function SessieDetail() {
     const verwijderdeFles = sessie.flessen.find((f) => f.id === flesId);
     if (!verwijderdeFles) return;
     const flesNaam = (() => {
-      const td = verwijderdeFles.tastingData as Record<string, unknown>;
+      const td = verwijderdeFles.tastingData as unknown as Record<string, unknown>;
       return (td?.wijnNaam || td?.cuveeNaam || td?.naam || "Fles") as string;
     })();
 

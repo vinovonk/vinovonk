@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# lokale sessiedata (persoonlijke proefnotities)
+/data/sessions/
+
+# Claude Code geheugen (persoonlijk)
+.claude/

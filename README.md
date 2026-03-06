@@ -1,36 +1,41 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# VinoVonk
 
-## Getting Started
+Persoonlijke proefnotities-app voor WSET Level 3. Noteer, bewaar en exporteer je tasting notes voor wijn, spirits, bier, sake en meer — volledig lokaal in je browser, zonder account of server.
 
-First, run the development server:
+## Features
+
+- Proefnotities per fles, gestructureerd naar WSET-methodiek
+- Ondersteuning voor meerdere dranktypes: wijn, spirits, bier, sake, alcoholvrij, anders
+- Optionele AI-ondersteuning voor gesproken notities en automatische invulling
+- Lokale opslag via `localStorage` — geen backend, geen account
+- Dark mode
+
+## Installatie
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/<gebruikersnaam>/vinovonk-app.git
+cd vinovonk-app
+npm install
+cp .env.local.example .env.local
+npm run dev -- -p 3001
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3001](http://localhost:3001).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## AI-ondersteuning (optioneel)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Stel `AI_MODE` in via `.env.local`:
 
-## Learn More
+| Waarde | Beschrijving |
+|--------|-------------|
+| `manual` | Geen AI, handmatig formulier invullen (standaard) |
+| `local` | Ollama (Mistral) + lokale Whisper — volledig offline |
+| `cloud` | Claude API (Anthropic) + OpenAI Whisper |
 
-To learn more about Next.js, take a look at the following resources:
+Voor `cloud`-modus: voeg `ANTHROPIC_API_KEY` en `OPENAI_API_KEY` toe aan `.env.local`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Tech stack
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [Next.js 16](https://nextjs.org/) + TypeScript
+- [Tailwind CSS v4](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com/)
+- [Sonner](https://sonner.emilkowal.ski/) voor toasts
