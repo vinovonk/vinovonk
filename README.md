@@ -39,3 +39,7 @@ Voor `cloud`-modus: voeg `ANTHROPIC_API_KEY` en `OPENAI_API_KEY` toe aan `.env.l
 - [Next.js 16](https://nextjs.org/) + TypeScript
 - [Tailwind CSS v4](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com/)
 - [Sonner](https://sonner.emilkowal.ski/) voor toasts
+
+## Licentie
+
+MIT — zie [LICENSE](./LICENSE). Vrij te gebruiken, aanpassen en verspreiden, mits de oorspronkelijke auteursvermelding behouden blijft.
