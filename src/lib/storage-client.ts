@@ -1,6 +1,7 @@
 // Client-side localStorage opslag voor proefsessies
 // Vervangt de server-side storage.ts — geen API routes meer nodig
 import { TastingSession, SessionSummary, TastingNote } from '@/types/tasting-session';
+import { getBiodynamischDagType } from '@/lib/biodynamisch';
 import { v4 as uuidv4 } from 'uuid';
 
 const INDEX_KEY = 'vinovonk_sessions_index';
@@ -55,6 +56,7 @@ export function createSession(naam: string, beschrijving?: string): TastingSessi
     flessen: [],
     createdAt: now,
     updatedAt: now,
+    biodynamischDagType: getBiodynamischDagType(new Date()),
   };
 
   localStorage.setItem(sessionKey(id), JSON.stringify(session));

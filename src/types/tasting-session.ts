@@ -31,6 +31,7 @@ export interface TastingSession {
   createdAt: string;
   updatedAt: string;
   isArchived?: boolean;
+  biodynamischDagType?: 'fruit' | 'bloem' | 'blad' | 'wortel';
 }
 
 export interface SessionSummary {

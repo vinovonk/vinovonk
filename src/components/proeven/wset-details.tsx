@@ -17,6 +17,7 @@ import type {
 interface WsetDetailsProps {
   data: WsetWineTasting["details"];
   onChange: (details: WsetWineTasting["details"]) => void;
+  drankNaam?: string; // standaard "wijn", champagne-formulier geeft "champagne" mee
 }
 
 const herkomstOpties = [
@@ -41,7 +42,7 @@ const aanbevolenVoorOpties: { waarde: AanbevolenVoor; label: string }[] = [
   { waarde: "cadeautip", label: "Cadeautip" },
 ];
 
-export function WsetDetails({ data, onChange }: WsetDetailsProps) {
+export function WsetDetails({ data, onChange, drankNaam = "wijn" }: WsetDetailsProps) {
   if (!data) return null;
 
   const updateField = <K extends keyof NonNullable<WsetWineTasting["details"]>>(
@@ -67,7 +68,7 @@ export function WsetDetails({ data, onChange }: WsetDetailsProps) {
         <div>
           <h3 className="text-xl font-semibold mb-2 text-foreground">Herkomst & Verkoop</h3>
           <p className="text-base text-muted-foreground">
-            Hoe ben je aan deze wijn gekomen en waar is deze te verkrijgen
+            Hoe ben je aan deze {drankNaam} gekomen en waar is deze te verkrijgen
           </p>
         </div>
 
@@ -113,7 +114,7 @@ export function WsetDetails({ data, onChange }: WsetDetailsProps) {
         <div>
           <h3 className="text-xl font-semibold mb-2 text-foreground">Proef Context</h3>
           <p className="text-base text-muted-foreground">
-            Wanneer en in welke setting heb je deze wijn geproefd
+            Wanneer en in welke setting heb je deze {drankNaam} geproefd
           </p>
         </div>
 
@@ -187,7 +188,7 @@ export function WsetDetails({ data, onChange }: WsetDetailsProps) {
               Sparks by VinoVonk podcast
             </Label>
             <p className="text-sm text-muted-foreground">
-              Komt deze wijn in de podcast?
+              Komt deze {drankNaam} in de podcast?
             </p>
           </div>
           <Switch

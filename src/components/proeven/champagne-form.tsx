@@ -9,7 +9,8 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Slider } from "@/components/ui/slider";
 import { ButtonGroup } from "@/components/proeven/button-group";
-import { X, Eye, Flower2, UtensilsCrossed, Award, ChevronRight, Link2, Link2Off } from "lucide-react";
+import { X, Eye, Flower2, UtensilsCrossed, Award, FileText, ChevronRight, Link2, Link2Off } from "lucide-react";
+import { WsetDetails } from "@/components/proeven/wset-details";
 import { AutocompleteInput } from "@/components/proeven/autocomplete-input";
 import { toast } from "sonner";
 import type { ChampagneTasting } from "@/types/champagne";
@@ -487,6 +488,7 @@ export const ChampagneForm = forwardRef<ChampagneFormHandle, ChampagneFormProps>
               className="h-11 text-base"
             />
           </div>
+
         </div>
       );
     }
@@ -494,28 +496,48 @@ export const ChampagneForm = forwardRef<ChampagneFormHandle, ChampagneFormProps>
     // === PROEVEN FASE ===
     return (
       <div className="space-y-4" ref={tabsRef}>
-        <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="w-full grid grid-cols-4 h-10">
-            <TabsTrigger value="visueel" className="gap-1.5 text-sm">
-              <Eye className="h-4 w-4 shrink-0" />
-              <span className="hidden sm:inline">Visueel</span>
+        <Tabs value={activeTab} onValueChange={(tab) => { setActiveTab(tab); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="w-full">
+          <TabsList className="!w-full !flex !h-14 p-1.5 bg-muted/50 border border-border gap-1.5">
+            <TabsTrigger
+              value="visueel"
+              className="flex-1 text-base gap-2 h-full data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm data-[state=active]:border data-[state=active]:border-border/50 transition-all"
+            >
+              <Eye className="h-5 w-5" />
+              <span className="hidden sm:inline font-medium">Appearance</span>
             </TabsTrigger>
-            <TabsTrigger value="neus" className="gap-1.5 text-sm">
-              <Flower2 className="h-4 w-4 shrink-0" />
-              <span className="hidden sm:inline">Neus</span>
+            <TabsTrigger
+              value="neus"
+              className="flex-1 text-base gap-2 h-full data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm data-[state=active]:border data-[state=active]:border-border/50 transition-all"
+            >
+              <Flower2 className="h-5 w-5" />
+              <span className="hidden sm:inline font-medium">Nose</span>
             </TabsTrigger>
-            <TabsTrigger value="mondgevoel" className="gap-1.5 text-sm">
-              <UtensilsCrossed className="h-4 w-4 shrink-0" />
-              <span className="hidden sm:inline">Mondgevoel</span>
+            <TabsTrigger
+              value="mondgevoel"
+              className="flex-1 text-base gap-2 h-full data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm data-[state=active]:border data-[state=active]:border-border/50 transition-all"
+            >
+              <UtensilsCrossed className="h-5 w-5" />
+              <span className="hidden sm:inline font-medium">Palate</span>
             </TabsTrigger>
-            <TabsTrigger value="conclusie" className="gap-1.5 text-sm">
-              <Award className="h-4 w-4 shrink-0" />
-              <span className="hidden sm:inline">Conclusie</span>
+            <TabsTrigger
+              value="conclusie"
+              className="flex-1 text-base gap-2 h-full data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm data-[state=active]:border data-[state=active]:border-border/50 transition-all"
+            >
+              <Award className="h-5 w-5" />
+              <span className="hidden sm:inline font-medium">Conclusions</span>
+            </TabsTrigger>
+            <TabsTrigger
+              value="details"
+              className="flex-1 text-base gap-2 h-full data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm data-[state=active]:border data-[state=active]:border-border/50 transition-all"
+            >
+              <FileText className="h-5 w-5" />
+              <span className="hidden sm:inline font-medium">Details</span>
             </TabsTrigger>
           </TabsList>
 
+          <div className="mt-4">
           {/* === TAB 1: VISUEEL === */}
-          <TabsContent value="visueel" className="space-y-6 pt-4">
+          <TabsContent value="visueel" className="space-y-6">
             <ButtonGroup
               label="Colour"
               opties={champagneKleurOpties}
@@ -568,7 +590,7 @@ export const ChampagneForm = forwardRef<ChampagneFormHandle, ChampagneFormProps>
           </TabsContent>
 
           {/* === TAB 2: NEUS === */}
-          <TabsContent value="neus" className="space-y-6 pt-4">
+          <TabsContent value="neus" className="space-y-6">
             <ButtonGroup
               label="Intensity"
               opties={champagneIntensiteitOpties}
@@ -615,7 +637,7 @@ export const ChampagneForm = forwardRef<ChampagneFormHandle, ChampagneFormProps>
           </TabsContent>
 
           {/* === TAB 3: MONDGEVOEL === */}
-          <TabsContent value="mondgevoel" className="space-y-6 pt-4">
+          <TabsContent value="mondgevoel" className="space-y-6">
             <ButtonGroup
               label="Mousse on palate"
               opties={mousseKwaliteitOpties}
@@ -722,7 +744,7 @@ export const ChampagneForm = forwardRef<ChampagneFormHandle, ChampagneFormProps>
           </TabsContent>
 
           {/* === TAB 4: CONCLUSIE === */}
-          <TabsContent value="conclusie" className="space-y-6 pt-4">
+          <TabsContent value="conclusie" className="space-y-6">
             {/* Kwaliteit */}
             <div className="space-y-3">
               <Label className="text-base font-medium">Quality level</Label>
@@ -839,6 +861,16 @@ export const ChampagneForm = forwardRef<ChampagneFormHandle, ChampagneFormProps>
               Save tasting note
             </Button>
           </TabsContent>
+
+          {/* === TAB 5: DETAILS === */}
+          <TabsContent value="details">
+            <WsetDetails
+              data={data.details}
+              onChange={(details) => setData({ ...data, details })}
+              drankNaam="champagne"
+            />
+          </TabsContent>
+          </div>
         </Tabs>
       </div>
     );

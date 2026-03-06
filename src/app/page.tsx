@@ -9,6 +9,7 @@ import { PlusCircle, Wine, Calendar, ChevronRight, Trash2 } from "lucide-react";
 import type { SessionSummary } from "@/types/tasting-session";
 import { toast } from "sonner";
 import { getSessions, deleteSession } from "@/lib/storage-client";
+import { BiodynamischBadge } from "@/components/biodynamisch-badge";
 
 export default function Dashboard() {
   const [sessies, setSessies] = useState<SessionSummary[]>([]);
@@ -104,10 +105,13 @@ export default function Dashboard() {
       {/* Hero */}
       <div className="text-center space-y-3 py-2">
         <h1 className="text-5xl font-semibold tracking-tight text-primary">VinoVonk</h1>
-        <p className="text-muted-foreground font-display italic text-lg">
+        <p className="text-muted-foreground text-lg">
           Proefnotities volgens WSET Level 3
         </p>
       </div>
+
+      {/* Biodynamische kalender */}
+      <BiodynamischBadge variant="uitgebreid" />
 
       {/* Snelstart */}
       <div className="flex gap-3">
@@ -188,7 +192,7 @@ export default function Dashboard() {
                         >
                           <div className="space-y-1">
                             <CardTitle className="text-base">{sessie.naam}</CardTitle>
-                            <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                            <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
                               <span className="flex items-center gap-1">
                                 <Calendar className="h-3.5 w-3.5" />
                                 {new Date(sessie.datum).toLocaleDateString("nl-NL", {
@@ -202,6 +206,7 @@ export default function Dashboard() {
                                 {sessie.aantalFlessen}{" "}
                                 {sessie.aantalFlessen === 1 ? "fles" : "flessen"}
                               </span>
+                              <BiodynamischBadge datum={sessie.datum} variant="compact" />
                             </div>
                           </div>
                         </div>
@@ -214,7 +219,7 @@ export default function Dashboard() {
                         >
                           <div className="space-y-1">
                             <CardTitle className="text-base">{sessie.naam}</CardTitle>
-                            <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                            <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
                               <span className="flex items-center gap-1">
                                 <Calendar className="h-3.5 w-3.5" />
                                 {new Date(sessie.datum).toLocaleDateString("nl-NL", {
@@ -228,6 +233,7 @@ export default function Dashboard() {
                                 {sessie.aantalFlessen}{" "}
                                 {sessie.aantalFlessen === 1 ? "fles" : "flessen"}
                               </span>
+                              <BiodynamischBadge datum={sessie.datum} variant="compact" />
                             </div>
                           </div>
                         </Link>

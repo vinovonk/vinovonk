@@ -18,19 +18,22 @@ npm run lint             # ESLint
 
 - **Next.js 16** (App Router) + TypeScript + React 19
 - **Tailwind CSS v4** + **shadcn/ui** (Radix UI)
-- **Fonts:** Geist Sans, Geist Mono, Cormorant Garamond (`font-display` voor italic kopjes)
+- **Fonts:**
+  - **Roboto** (`--font-roboto`) — primaire body- en UI-font, geregistreerd als `--font-sans` en `--font-heading`
+  - **Lora** (`--font-lora`) — beschikbaar via `.font-body` klasse (serif, voor leestekst)
+  - **Cormorant Garamond** (`--font-cormorant`) — beschikbaar via `.font-display` klasse (voor decoratieve koppen)
+  - **Geist Mono** (`--font-geist-mono`) — voor code/monospace
 - **Toasts:** Sonner
 
 ## Architectuur
 
 ### Opslag — localStorage (client-side)
 
-Alle data zit in de browser via `src/lib/storage-client.ts`. Dit is de actieve storage laag.
+Alle data zit in de browser via `src/lib/storage-client.ts`. Dit is de enige actieve storage laag.
 
 - `vinovonk_sessions_index` — lijst van alle sessies (`SessionSummary[]`)
 - `vinovonk_session_{uuid}` — volledige sessiedata per sessie (`TastingSession`)
 
-`src/lib/storage.ts` is de **verouderde** server-side filesystem versie (niet meer in gebruik).
 De enige actieve API route is `/api/export`.
 
 ### AI-modi (via `.env.local`)
@@ -47,9 +50,18 @@ AI-provider abstractie: `src/lib/ai/provider.ts`
 
 ### Dranktypes
 
-`wijn` | `spirit` | `bier` | `sake` | `alcoholvrij` | `anders`
+`wijn` | `spirit` | `bier` | `sake` | `champagne` | `alcoholvrij` | `anders`
 
 Elk dranktype heeft een eigen form-component in `src/components/proeven/` en een eigen type in `src/types/`.
+
+### Biodynamische kalender
+
+`src/lib/biodynamisch.ts` — client-side berekening van de maanpositie (siderisch, vereenvoudigd Meeus-algoritme). Geen externe API, geen npm-pakket.
+
+- `getBiodynamischInfo(date)` — geeft dagtype, label, sterrenbeeld, element, beschrijving, kleur, emoji
+- `getMaanTekenWisselTijden(date)` — geeft start/eindtijd van het huidige maanteken
+- `BiodynamischBadge` component — compact (lijst) en uitgebreid (dashboard) variant
+- Dagtypen: Fruit dag (vuur), Bloem dag (lucht), Blad dag (water), Wortel dag (aarde)
 
 ## Conventies
 

@@ -1,11 +1,12 @@
 # VinoVonk
 
-Persoonlijke proefnotities-app voor WSET Level 3. Noteer, bewaar en exporteer je tasting notes voor wijn, spirits, bier, sake en meer — volledig lokaal in je browser, zonder account of server.
+Persoonlijke proefnotities-app voor WSET Level 3. Noteer, bewaar en exporteer je tasting notes voor wijn, champagne, spirits, bier, sake en meer — volledig lokaal in je browser, zonder account of server.
 
 ## Features
 
 - Proefnotities per fles, gestructureerd naar WSET-methodiek
-- Ondersteuning voor meerdere dranktypes: wijn, spirits, bier, sake, alcoholvrij, anders
+- Ondersteuning voor meerdere dranktypes: wijn, champagne, spirits, bier, sake, alcoholvrij, anders
+- **Biodynamische kalender** — dagtype op basis van maanpositie (Maria Thun methode): Fruit dag, Bloem dag, Blad dag of Wortel dag. Zichtbaar op het dashboard en opgeslagen per sessie
 - Optionele AI-ondersteuning voor gesproken notities en automatische invulling
 - Lokale opslag via `localStorage` — geen backend, geen account
 - Dark mode
@@ -13,8 +14,8 @@ Persoonlijke proefnotities-app voor WSET Level 3. Noteer, bewaar en exporteer je
 ## Installatie
 
 ```bash
-git clone https://github.com/<gebruikersnaam>/vinovonk-app.git
-cd vinovonk-app
+git clone https://github.com/vinovonk/vinovonk.git
+cd vinovonk
 npm install
 cp .env.local.example .env.local
 npm run dev -- -p 3001
@@ -39,6 +40,7 @@ Voor `cloud`-modus: voeg `ANTHROPIC_API_KEY` en `OPENAI_API_KEY` toe aan `.env.l
 - [Next.js 16](https://nextjs.org/) + TypeScript
 - [Tailwind CSS v4](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com/)
 - [Sonner](https://sonner.emilkowal.ski/) voor toasts
+- Fonts: Roboto (UI), Lora (leestekst), Cormorant Garamond (display)
 
 ## Licentie
 

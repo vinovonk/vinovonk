@@ -1,14 +1,9 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, Cormorant_Garamond } from "next/font/google";
+import { Geist_Mono, Cormorant_Garamond, Roboto, Lora } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/header";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/theme-provider";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -17,6 +12,19 @@ const geistMono = Geist_Mono({
 
 const cormorantGaramond = Cormorant_Garamond({
   variable: "--font-cormorant",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
+});
+
+const roboto = Roboto({
+  variable: "--font-roboto",
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+});
+
+const lora = Lora({
+  variable: "--font-lora",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   style: ["normal", "italic"],
@@ -47,7 +55,7 @@ export default function RootLayout({
   return (
     <html lang="nl" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${cormorantGaramond.variable} antialiased min-h-screen bg-background`}
+        className={`${geistMono.variable} ${cormorantGaramond.variable} ${roboto.variable} ${lora.variable} antialiased min-h-screen bg-background`}
       >
         <ThemeProvider
           attribute="class"

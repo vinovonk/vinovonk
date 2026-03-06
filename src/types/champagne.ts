@@ -1,6 +1,8 @@
 // CIVC Champagne Specialist — Tasting Methodology
 // Based on the CIVC (Comité Interprofessionnel du Vin de Champagne) approach
 
+import type { WsetWineTasting } from '@/types/wset-wine';
+
 export type ChampagneCuveeType = 'nv' | 'millesime' | 'prestige';
 export type ChampagneStijl = 'blanc_de_blancs' | 'blanc_de_noirs' | 'assemblage' | 'rose_assemblage' | 'rose_saignee';
 export type ChampagneDosage = 'brut_nature' | 'extra_brut' | 'brut' | 'extra_sec' | 'sec' | 'demi_sec' | 'doux';
@@ -83,6 +85,9 @@ export interface ChampagneTasting {
     rijpingspotentieel?: string;
     voedselparing?: string;
   };
+
+  // 5. VinoVonk Details (gedeeld met WSET type)
+  details?: WsetWineTasting['details'];
 }
 
 export function createEmptyChampagneTasting(): ChampagneTasting {
@@ -126,6 +131,21 @@ export function createEmptyChampagneTasting(): ChampagneTasting {
       drinkbaarheid: null,
       rijpingspotentieel: '',
       voedselparing: '',
+    },
+    details: {
+      herkomst: null,
+      betaaldeSamenwerking: false,
+      waarTeKoop: '',
+      proefdatum: new Date().toISOString().split('T')[0],
+      gerechtCombinatie: '',
+      geproefMetPersonen: '',
+      serveerTemperatuur: '',
+      sparksPodcast: false,
+      podcastAflevering: '',
+      publicatieStatus: null,
+      opnieuwKopen: null,
+      prijsKwaliteitVerhouding: null,
+      aanbevolenVoor: [],
     },
   };
 }

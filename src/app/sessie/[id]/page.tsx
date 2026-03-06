@@ -19,6 +19,7 @@ import { v4 as uuidv4 } from "uuid";
 import { createEmptyWineTasting } from "@/types/wset-wine";
 import { toast } from "sonner";
 import { getSession, addFles, deleteFles, deleteSession } from "@/lib/storage-client";
+import { BiodynamischBadge } from "@/components/biodynamisch-badge";
 
 export default function SessieDetail() {
   const params = useParams();
@@ -153,6 +154,9 @@ export default function SessieDetail() {
             {sessie.flessen.length}{" "}
             {sessie.flessen.length === 1 ? "fles" : "flessen"}
           </p>
+          <div className="mt-2">
+            <BiodynamischBadge datum={sessie.datum} variant="compact" />
+          </div>
           {sessie.beschrijving && (
             <p className="text-base text-muted-foreground mt-3">
               {sessie.beschrijving}

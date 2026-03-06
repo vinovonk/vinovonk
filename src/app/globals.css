@@ -7,7 +7,9 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-roboto), system-ui, sans-serif;
+  --font-body: var(--font-lora), Georgia, serif;
+  --font-heading: var(--font-roboto), system-ui, sans-serif;
   --font-mono: var(--font-geist-mono);
   --font-display: var(--font-cormorant);
   --color-sidebar-ring: var(--sidebar-ring);
@@ -147,10 +149,22 @@
   }
   body {
     @apply bg-background text-foreground;
+    /* Roboto als standaard UI-font — leesbaar op alle groottes */
+    font-family: var(--font-roboto), system-ui, sans-serif;
   }
 
-  /* Display font voor headings — elegant, wijn-karakter */
-  h1, h2, h3 {
+  /* Roboto voor alle titels/headings */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-roboto), system-ui, sans-serif;
+  }
+
+  /* Lora via utility class — expliciet toe te passen op leestekst */
+  .font-body {
+    font-family: var(--font-lora), Georgia, serif;
+  }
+
+  /* Display font (Cormorant Garamond) via utility class — voor decoratieve koppen */
+  .font-display {
     font-family: var(--font-display), Georgia, serif;
   }
 }
