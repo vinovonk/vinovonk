@@ -113,7 +113,30 @@ export default function SessieDetail() {
 
   if (loading) {
     return (
-      <div className="text-center py-12 text-muted-foreground">Laden...</div>
+      <div className="space-y-8 pb-20 md:pb-8" aria-live="polite">
+        <div className="space-y-3">
+          <div className="h-4 w-24 bg-muted animate-pulse rounded" />
+          <div className="h-8 w-64 bg-muted animate-pulse rounded" />
+          <div className="h-4 w-48 bg-muted animate-pulse rounded" />
+        </div>
+        <div className="flex gap-3">
+          <div className="h-12 flex-1 bg-muted animate-pulse rounded-md" />
+          <div className="h-12 w-32 bg-muted animate-pulse rounded-md" />
+        </div>
+        {[1, 2, 3].map((i) => (
+          <div key={i} className="border rounded-lg p-5">
+            <div className="flex items-center gap-4">
+              <div className="h-6 w-8 bg-muted animate-pulse rounded" />
+              <div className="flex-1 space-y-2">
+                <div className="h-5 w-40 bg-muted animate-pulse rounded" />
+                <div className="h-4 w-20 bg-muted animate-pulse rounded" />
+              </div>
+              <div className="h-6 w-6 bg-muted animate-pulse rounded" />
+            </div>
+          </div>
+        ))}
+        <span className="sr-only">Sessie wordt geladen...</span>
+      </div>
     );
   }
 
@@ -158,7 +181,7 @@ export default function SessieDetail() {
             <BiodynamischBadge datum={sessie.datum} variant="compact" />
           </div>
           {sessie.beschrijving && (
-            <p className="text-base text-muted-foreground mt-3">
+            <p className="text-base text-muted-foreground mt-3 font-body">
               {sessie.beschrijving}
             </p>
           )}
@@ -250,7 +273,8 @@ export default function SessieDetail() {
                         variant="ghost"
                         size="sm"
                         onClick={() => handleDeleteFles(fles.id)}
-                        className="text-muted-foreground hover:text-destructive h-10 w-10"
+                        aria-label="Fles verwijderen"
+                        className="text-muted-foreground hover:text-destructive h-11 w-11"
                       >
                         <Trash2 className="h-5 w-5" />
                       </Button>

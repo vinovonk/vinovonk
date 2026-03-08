@@ -2,6 +2,7 @@
 
 import { ButtonGroup } from "./button-group";
 import { AromaPicker } from "./aroma-picker";
+import { Textarea } from "@/components/ui/textarea";
 import type { WsetWineTasting } from "@/types/wset-wine";
 import {
   conditieOpties,
@@ -22,6 +23,23 @@ export function WsetNose({ data, onChange }: Props) {
         <p className="text-base text-muted-foreground">
           Beoordeel de geur van de wijn
         </p>
+      </div>
+
+      {/* Vibe — persoonlijke eerste indruk */}
+      <div className="rounded-xl border border-primary/15 bg-primary/[0.03] p-4 space-y-2">
+        <label className="text-base font-medium text-foreground italic">
+          Vibe — what does it remind you of?
+        </label>
+        <p className="text-sm text-muted-foreground">
+          Your personal first impression, in any language
+        </p>
+        <Textarea
+          placeholder="warm apple pie with whipped cream, grandmother's garden, fresh brioche..."
+          value={data.vibe || ""}
+          onChange={(e) => onChange({ ...data, vibe: e.target.value })}
+          rows={2}
+          className="text-base bg-background/60 placeholder:italic border-primary/10 focus-visible:ring-primary/30"
+        />
       </div>
 
       <ButtonGroup

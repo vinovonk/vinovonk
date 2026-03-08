@@ -319,22 +319,59 @@ export const ChampagneForm = forwardRef<ChampagneFormHandle, ChampagneFormProps>
       },
     }), [data]);
 
+    const champagneTabLabels: Record<string, string> = {
+      visueel: 'Appearance',
+      neus: 'Nose',
+      mondgevoel: 'Palate',
+      conclusie: 'Conclusions',
+    };
+
+    const navigateToMissing = (missing: { label: string; tab: string }[]) => {
+      if (missing.length === 0) return;
+      const firstTab = missing[0].tab;
+      setActiveTab(firstTab);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
     const handleSave = () => {
       // Validate required fields in proeven fase
       if (fase === 'proeven') {
-        const missing: string[] = [];
-        if (!data.visueel.kleur) missing.push("Colour");
-        if (!data.visueel.belGrootte) missing.push("Bubble size");
-        if (!data.visueel.mousse) missing.push("Mousse");
-        if (!data.neus.intensiteit) missing.push("Nose intensity");
-        if (!data.neus.autolytischKarakter) missing.push("Autolytic character");
-        if (!data.mondgevoel.zoetheid) missing.push("Sweetness");
-        if (!data.mondgevoel.zuurgraad) missing.push("Acidity");
-        if (!data.mondgevoel.afdronkLengte) missing.push("Finish length");
-        if (!data.conclusie.kwaliteit) missing.push("Quality level");
+        const missing: { label: string; tab: string }[] = [];
+        if (!data.visueel.kleur) missing.push({ label: "Colour", tab: "visueel" });
+        if (!data.visueel.belGrootte) missing.push({ label: "Bubble size", tab: "visueel" });
+        if (!data.visueel.mousse) missing.push({ label: "Mousse", tab: "visueel" });
+        if (!data.neus.intensiteit) missing.push({ label: "Intensity", tab: "neus" });
+        if (!data.neus.autolytischKarakter) missing.push({ label: "Autolytic character", tab: "neus" });
+        if (!data.mondgevoel.zoetheid) missing.push({ label: "Sweetness", tab: "mondgevoel" });
+        if (!data.mondgevoel.zuurgraad) missing.push({ label: "Acidity", tab: "mondgevoel" });
+        if (!data.mondgevoel.afdronkLengte) missing.push({ label: "Finish length", tab: "mondgevoel" });
+        if (!data.conclusie.kwaliteit) missing.push({ label: "Quality level", tab: "conclusie" });
 
         if (missing.length > 0) {
-          toast.warning(`Nog in te vullen: ${missing.join(", ")}`, { duration: 5000 });
+          const count = missing.length;
+          const perTab = missing.reduce<Record<string, string[]>>((acc, m) => {
+            if (!acc[m.tab]) acc[m.tab] = [];
+            acc[m.tab].push(m.label);
+            return acc;
+          }, {});
+          const firstTab = missing[0].tab;
+          const tabNaam = champagneTabLabels[firstTab] || firstTab;
+
+          toast.warning(
+            `Nog ${count} veld${count > 1 ? 'en' : ''} in te vullen`,
+            {
+              description: Object.entries(perTab)
+                .map(([tab, labels]) => `${champagneTabLabels[tab]}: ${labels.join(', ')}`)
+                .join(' · '),
+              duration: 8000,
+              action: {
+                label: `Ga naar ${tabNaam}`,
+                onClick: () => navigateToMissing(missing),
+              },
+            }
+          );
+          // Automatisch naar eerste ontbrekende tab navigeren
+          navigateToMissing(missing);
           return;
         }
       }
@@ -591,6 +628,23 @@ export const ChampagneForm = forwardRef<ChampagneFormHandle, ChampagneFormProps>
 
           {/* === TAB 2: NEUS === */}
           <TabsContent value="neus" className="space-y-6">
+            {/* Vibe — persoonlijke eerste indruk */}
+            <div className="rounded-xl border border-primary/15 bg-primary/[0.03] p-4 space-y-2">
+              <label className="text-base font-medium text-foreground italic">
+                Vibe — what does it remind you of?
+              </label>
+              <p className="text-sm text-muted-foreground">
+                Your personal first impression, in any language
+              </p>
+              <Textarea
+                placeholder="toasted brioche, lemon curd, fresh-baked croissants, sea breeze..."
+                value={data.neus.vibe || ""}
+                onChange={(e) => setData({ ...data, neus: { ...data.neus, vibe: e.target.value } })}
+                rows={2}
+                className="text-base bg-background/60 placeholder:italic border-primary/10 focus-visible:ring-primary/30"
+              />
+            </div>
+
             <ButtonGroup
               label="Intensity"
               opties={champagneIntensiteitOpties}

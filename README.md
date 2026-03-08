@@ -6,10 +6,14 @@ Persoonlijke proefnotities-app voor WSET Level 3. Noteer, bewaar en exporteer je
 
 - Proefnotities per fles, gestructureerd naar WSET-methodiek
 - Ondersteuning voor meerdere dranktypes: wijn, champagne, spirits, bier, sake, alcoholvrij, anders
+- **Vibe-veld** — persoonlijke eerste indruk bij het ruiken, vrije tekst in elke taal
+- **Twee-staps flow** — wijn & champagne: eerst info invullen, dan proeven met visuele progress indicator
+- **Validatie-navigatie** — bij ontbrekende velden automatisch naar de juiste tab met toast-feedback
 - **Biodynamische kalender** — dagtype op basis van maanpositie (Maria Thun methode): Fruit dag, Bloem dag, Blad dag of Wortel dag. Zichtbaar op het dashboard en opgeslagen per sessie
 - Optionele AI-ondersteuning voor gesproken notities en automatische invulling
 - Lokale opslag via `localStorage` — geen backend, geen account
-- Dark mode
+- Responsive design met sticky navigatie op mobile
+- Dark mode & light mode
 
 ## Installatie
 

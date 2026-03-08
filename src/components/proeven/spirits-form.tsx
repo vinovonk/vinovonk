@@ -94,7 +94,7 @@ function AromaCategoryPicker({
         placeholder={`Search ${label.toLowerCase()}...`}
         value={zoek}
         onChange={(e) => setZoek(e.target.value)}
-        className="h-8 text-xs"
+        className="h-10 text-sm"
       />
 
       {/* Opties */}

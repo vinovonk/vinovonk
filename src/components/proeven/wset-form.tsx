@@ -78,6 +78,7 @@ function deepMergeWsetData(
   // Neus
   if (ai.neus) {
     merged.neus = {
+      vibe: current.neus.vibe || ai.neus.vibe || '',
       conditie: current.neus.conditie || ai.neus.conditie || null,
       intensiteit: current.neus.intensiteit || ai.neus.intensiteit || null,
       aromaKenmerken: ai.neus.aromaKenmerken
@@ -151,42 +152,76 @@ export const WsetForm = forwardRef<WsetFormHandle, WsetFormProps>(function WsetF
     });
   };
 
-  const validateRequiredFields = (): { isValid: boolean; missing: string[] } => {
-    const missing: string[] = [];
+  const validateRequiredFields = (): { isValid: boolean; missing: { label: string; tab: string }[] } => {
+    const missing: { label: string; tab: string }[] = [];
 
     // Appearance - all required
-    if (!data.uiterlijk.helderheid) missing.push('Appearance → Clarity');
-    if (!data.uiterlijk.intensiteit) missing.push('Appearance → Intensity');
-    if (!data.uiterlijk.kleur) missing.push('Appearance → Colour');
+    if (!data.uiterlijk.helderheid) missing.push({ label: 'Clarity', tab: 'appearance' });
+    if (!data.uiterlijk.intensiteit) missing.push({ label: 'Intensity', tab: 'appearance' });
+    if (!data.uiterlijk.kleur) missing.push({ label: 'Colour', tab: 'appearance' });
 
     // Nose - all required
-    if (!data.neus.conditie) missing.push('Nose → Condition');
-    if (!data.neus.intensiteit) missing.push('Nose → Intensity');
-    if (!data.neus.ontwikkeling) missing.push('Nose → Development');
+    if (!data.neus.conditie) missing.push({ label: 'Condition', tab: 'nose' });
+    if (!data.neus.intensiteit) missing.push({ label: 'Intensity', tab: 'nose' });
+    if (!data.neus.ontwikkeling) missing.push({ label: 'Development', tab: 'nose' });
 
     // Palate - essential fields only
-    if (!data.gehemelte.zoetheid) missing.push('Palate → Sweetness');
-    if (!data.gehemelte.zuurgraad) missing.push('Palate → Acidity');
-    if (!data.gehemelte.alcohol) missing.push('Palate → Alcohol');
-    if (!data.gehemelte.body) missing.push('Palate → Body');
-    if (!data.gehemelte.smaakIntensiteit) missing.push('Palate → Flavour intensity');
-    if (!data.gehemelte.afdronk.lengte) missing.push('Palate → Finish (Length)');
+    if (!data.gehemelte.zoetheid) missing.push({ label: 'Sweetness', tab: 'palate' });
+    if (!data.gehemelte.zuurgraad) missing.push({ label: 'Acidity', tab: 'palate' });
+    if (!data.gehemelte.alcohol) missing.push({ label: 'Alcohol', tab: 'palate' });
+    if (!data.gehemelte.body) missing.push({ label: 'Body', tab: 'palate' });
+    if (!data.gehemelte.smaakIntensiteit) missing.push({ label: 'Flavour intensity', tab: 'palate' });
+    if (!data.gehemelte.afdronk.lengte) missing.push({ label: 'Finish (Length)', tab: 'palate' });
 
     // Conclusions - all required
-    if (!data.conclusie.kwaliteit) missing.push('Conclusions → Quality level');
-    if (!data.conclusie.drinkbaarheid) missing.push('Conclusions → Readiness for drinking');
+    if (!data.conclusie.kwaliteit) missing.push({ label: 'Quality level', tab: 'conclusions' });
+    if (!data.conclusie.drinkbaarheid) missing.push({ label: 'Readiness for drinking', tab: 'conclusions' });
 
     return { isValid: missing.length === 0, missing };
+  };
+
+  const tabLabels: Record<string, string> = {
+    appearance: 'Appearance',
+    nose: 'Nose',
+    palate: 'Palate',
+    conclusions: 'Conclusions',
+  };
+
+  const navigateToMissing = (missing: { label: string; tab: string }[]) => {
+    if (missing.length === 0) return;
+    const firstTab = missing[0].tab;
+    setActiveTab(firstTab);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleSave = () => {
     const validation = validateRequiredFields();
     if (!validation.isValid) {
       const count = validation.missing.length;
+      // Groepeer per tab
+      const perTab = validation.missing.reduce<Record<string, string[]>>((acc, m) => {
+        if (!acc[m.tab]) acc[m.tab] = [];
+        acc[m.tab].push(m.label);
+        return acc;
+      }, {});
+      const firstTab = validation.missing[0].tab;
+      const tabNaam = tabLabels[firstTab] || firstTab;
+
       toast.error(
-        `Vul nog ${count} verplicht${count > 1 ? 'e velden' : ' veld'} in: ${validation.missing.slice(0, 3).join(', ')}${count > 3 ? ` en nog ${count - 3}...` : ''}`,
-        { duration: 6000 }
+        `Nog ${count} veld${count > 1 ? 'en' : ''} in te vullen`,
+        {
+          description: Object.entries(perTab)
+            .map(([tab, labels]) => `${tabLabels[tab]}: ${labels.join(', ')}`)
+            .join(' · '),
+          duration: 8000,
+          action: {
+            label: `Ga naar ${tabNaam}`,
+            onClick: () => navigateToMissing(validation.missing),
+          },
+        }
       );
+      // Automatisch naar eerste ontbrekende tab navigeren
+      navigateToMissing(validation.missing);
       return;
     }
 

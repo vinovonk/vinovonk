@@ -27,12 +27,18 @@ export function ButtonGroup<T extends string>({
 }: ButtonGroupProps<T>) {
   return (
     <div className="space-y-2.5">
-      <label className="text-base font-medium text-foreground">{label}</label>
-      <div className="flex flex-wrap gap-2">
+      <label className="text-base font-medium text-foreground" id={`${label.replace(/\s+/g, '-').toLowerCase()}-label`}>{label}</label>
+      <div
+        className="flex flex-wrap gap-2"
+        role="radiogroup"
+        aria-labelledby={`${label.replace(/\s+/g, '-').toLowerCase()}-label`}
+      >
         {opties.map((optie) => (
           <button
             key={optie.waarde}
             type="button"
+            role="radio"
+            aria-checked={waarde === optie.waarde}
             onClick={() => onChange(optie.waarde)}
             className={cn(
               "rounded-md border font-medium transition-all min-h-[44px]",

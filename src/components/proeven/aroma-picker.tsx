@@ -45,30 +45,42 @@ export function AromaPicker({
         <ScrollArea className="max-h-32">
           <div className="flex flex-wrap gap-2 pr-4">
             {primair.map((a) => (
-              <Badge key={`p-${a}`} variant="default" className="gap-1.5 text-sm px-2.5 py-1">
+              <Badge key={`p-${a}`} variant="default" className="gap-1 text-sm px-2.5 py-1.5">
                 {a}
-                <X
-                  className="h-3.5 w-3.5 cursor-pointer"
+                <button
+                  type="button"
                   onClick={() => onPrimairChange(primair.filter((x) => x !== a))}
-                />
+                  className="p-0.5 rounded-sm hover:bg-primary-foreground/20 transition-colors"
+                  aria-label={`${a} verwijderen`}
+                >
+                  <X className="h-3.5 w-3.5" />
+                </button>
               </Badge>
             ))}
             {secundair.map((a) => (
-              <Badge key={`s-${a}`} variant="secondary" className="gap-1.5 text-sm px-2.5 py-1">
+              <Badge key={`s-${a}`} variant="secondary" className="gap-1 text-sm px-2.5 py-1.5">
                 {a}
-                <X
-                  className="h-3.5 w-3.5 cursor-pointer"
+                <button
+                  type="button"
                   onClick={() => onSecundairChange(secundair.filter((x) => x !== a))}
-                />
+                  className="p-0.5 rounded-sm hover:bg-foreground/10 transition-colors"
+                  aria-label={`${a} verwijderen`}
+                >
+                  <X className="h-3.5 w-3.5" />
+                </button>
               </Badge>
             ))}
             {tertiair.map((a) => (
-              <Badge key={`t-${a}`} variant="outline" className="gap-1.5 text-sm px-2.5 py-1">
+              <Badge key={`t-${a}`} variant="outline" className="gap-1 text-sm px-2.5 py-1.5">
                 {a}
-                <X
-                  className="h-3.5 w-3.5 cursor-pointer"
+                <button
+                  type="button"
                   onClick={() => onTertiairChange(tertiair.filter((x) => x !== a))}
-                />
+                  className="p-0.5 rounded-sm hover:bg-foreground/10 transition-colors"
+                  aria-label={`${a} verwijderen`}
+                >
+                  <X className="h-3.5 w-3.5" />
+                </button>
               </Badge>
             ))}
           </div>
@@ -129,7 +141,7 @@ export function AromaPicker({
               setCustomAroma("");
             }
           }}
-          className="text-sm"
+          className="text-base h-11"
         />
         <button
           type="button"
@@ -139,7 +151,8 @@ export function AromaPicker({
               setCustomAroma("");
             }
           }}
-          className="px-3 py-2 rounded-md bg-primary/10 text-primary hover:bg-primary/20 transition-colors"
+          className="px-3 py-2 rounded-md bg-primary/10 text-primary hover:bg-primary/20 transition-colors min-h-[44px]"
+          aria-label="Aroma toevoegen"
         >
           <Plus className="h-4 w-4" />
         </button>

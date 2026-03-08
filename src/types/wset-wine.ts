@@ -72,6 +72,7 @@ export interface WsetWineTasting {
 
   // 2. Neus (7 punten)
   neus: {
+    vibe?: string; // persoonlijke eerste indruk
     conditie: Conditie | null;
     intensiteit: IntensiteitVijf | null;
     aromaKenmerken: AromaKenmerken;
@@ -138,6 +139,7 @@ export function createEmptyWineTasting(): WsetWineTasting {
       overig: '',
     },
     neus: {
+      vibe: '',
       conditie: null,
       intensiteit: null,
       aromaKenmerken: {

@@ -37,17 +37,19 @@ export function WsetConclusion({
       </div>
 
       <div className="space-y-2">
-        <label className="text-sm font-medium text-foreground">Quality level</label>
-        <div className="flex flex-wrap gap-1.5">
+        <label className="text-sm font-medium text-foreground" id="quality-level-label">Quality level</label>
+        <div className="flex flex-wrap gap-1.5" role="radiogroup" aria-labelledby="quality-level-label">
           {kwaliteitOpties.map((optie) => (
             <button
               key={optie.waarde}
               type="button"
+              role="radio"
+              aria-checked={data.kwaliteit === optie.waarde}
               onClick={() => onChange({ ...data, kwaliteit: optie.waarde })}
-              className={`px-3 py-2 rounded-md border text-sm transition-all ${
+              className={`px-3 py-2 rounded-md border text-sm transition-all min-h-[44px] ${
                 data.kwaliteit === optie.waarde
                   ? "bg-primary text-primary-foreground border-primary shadow-sm"
-                  : "bg-background text-muted-foreground border-border hover:bg-accent"
+                  : "bg-background text-muted-foreground border-border hover:bg-accent hover:text-accent-foreground hover:border-accent-foreground/20"
               }`}
               title={optie.beschrijving}
             >

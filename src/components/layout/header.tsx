@@ -73,14 +73,14 @@ export function Header() {
         </div>
       </div>
       {/* Mobile navigation bar */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-background border-t z-50">
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-background border-t z-50 pb-[env(safe-area-inset-bottom)]">
         <div className="flex items-center justify-around h-14">
           {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
               className={cn(
-                "flex flex-col items-center gap-0.5 px-3 py-1.5 text-xs transition-colors",
+                "flex flex-col items-center gap-0.5 px-3 py-1.5 text-xs min-h-[44px] justify-center transition-colors duration-200",
                 pathname === item.href
                   ? "text-primary"
                   : "text-muted-foreground"

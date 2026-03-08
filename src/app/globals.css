@@ -151,6 +151,7 @@
     @apply bg-background text-foreground;
     /* Roboto als standaard UI-font — leesbaar op alle groottes */
     font-family: var(--font-roboto), system-ui, sans-serif;
+    line-height: 1.6;
   }
 
   /* Roboto voor alle titels/headings */
@@ -183,4 +184,11 @@
 
 main {
   animation: page-fade-in 0.25s ease-out;
+}
+
+/* Respecteer gebruikersvoorkeur voor verminderde beweging */
+@media (prefers-reduced-motion: reduce) {
+  main {
+    animation: none;
+  }
 }

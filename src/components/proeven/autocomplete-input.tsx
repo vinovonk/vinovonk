@@ -43,6 +43,8 @@ export function AutocompleteInput({
     }
   };
 
+  const listboxId = `${id}-listbox`;
+
   return (
     <div className="relative">
       <Input
@@ -60,16 +62,32 @@ export function AutocompleteInput({
           // Vertraging om klik op suggestie te detecteren
           setTimeout(() => setShowSuggesties(false), 200);
         }}
+        role="combobox"
+        aria-expanded={showSuggesties && suggesties.length > 0}
+        aria-controls={listboxId}
+        aria-autocomplete="list"
+        aria-activedescendant={
+          showSuggesties && suggesties.length > 0
+            ? `${id}-option-${geselecteerdeIndex}`
+            : undefined
+        }
         className={className}
       />
 
       {/* Autocomplete dropdown */}
       {showSuggesties && suggesties.length > 0 && (
-        <div className="absolute z-50 w-full mt-1 bg-background border border-border rounded-md shadow-lg max-h-60 overflow-auto">
+        <div
+          id={listboxId}
+          role="listbox"
+          className="absolute z-50 w-full mt-1 bg-background border border-border rounded-md shadow-lg max-h-60 overflow-auto"
+        >
           {suggesties.map((suggestie, index) => (
             <button
               key={suggestie}
+              id={`${id}-option-${index}`}
               type="button"
+              role="option"
+              aria-selected={index === geselecteerdeIndex}
               onClick={() => {
                 onChange(suggestie);
                 setShowSuggesties(false);

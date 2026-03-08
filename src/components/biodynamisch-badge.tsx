@@ -1,6 +1,15 @@
 'use client';
 
-import { getBiodynamischInfo, getMaanTekenWisselTijden, BiodynamischDagType } from '@/lib/biodynamisch';
+import { getBiodynamischInfo, getMaanTekenWisselTijden, type BiodynamischDagType } from '@/lib/biodynamisch';
+import { Grape, Flower2, Leaf, Sprout } from 'lucide-react';
+
+// SVG iconen per dagtype — consistent met Lucide iconset, toegankelijk
+const dagTypeIcoon: Record<BiodynamischDagType, React.ComponentType<{ className?: string }>> = {
+  fruit: Grape,
+  bloem: Flower2,
+  blad: Leaf,
+  wortel: Sprout,
+};
 
 interface BiodynamischBadgeProps {
   // Geef ofwel een dagType op (voor opgeslagen sessies) ofwel een datum (voor live berekening)
@@ -30,13 +39,15 @@ export function BiodynamischBadge({
     ? { ...info, dagType: effectiefDagType }
     : info;
 
+  const Icoon = dagTypeIcoon[effectiefDagType];
+
   if (variant === 'compact') {
     return (
       <span
         className={`inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-xs font-medium ${effectiefInfo.kleur}`}
         title={`${effectiefInfo.label} — ${effectiefInfo.sterrenbeeld} (${effectiefInfo.element})`}
       >
-        <span>{effectiefInfo.emoji}</span>
+        <Icoon className="h-3 w-3" aria-hidden="true" />
         <span>{effectiefInfo.label}</span>
       </span>
     );
@@ -62,15 +73,15 @@ export function BiodynamischBadge({
   return (
     <div className={`rounded-xl border-2 px-5 py-4 ${effectiefInfo.kleur}`}>
       <div className="flex items-start gap-3">
-        <span className="text-3xl leading-none mt-0.5">{effectiefInfo.emoji}</span>
+        <Icoon className="h-7 w-7 mt-0.5 shrink-0" aria-hidden="true" />
         <div className="flex-1 min-w-0">
           <p className="text-sm mb-0.5 capitalize">{datumGeformatteerd}</p>
           <p className="text-sm font-semibold mb-0.5">{effectiefInfo.label}</p>
           <p className="text-sm mb-2">
             Maan in {effectiefInfo.sterrenbeeld} · {effectiefInfo.element} · {tijdRange}
           </p>
-          <p className="text-sm mb-0.5">{effectiefInfo.beschrijving}</p>
-          <p className="text-sm font-medium">{effectiefInfo.aanbeveling}</p>
+          <p className="text-sm mb-0.5 font-body">{effectiefInfo.beschrijving}</p>
+          <p className="text-sm font-medium font-body">{effectiefInfo.aanbeveling}</p>
         </div>
       </div>
       <p className="mt-3 text-sm border-t border-current/20 pt-2">

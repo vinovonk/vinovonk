@@ -104,7 +104,7 @@ export default function Dashboard() {
     <div className="space-y-8 pb-20 md:pb-8">
       {/* Hero */}
       <div className="text-center space-y-3 py-2">
-        <h1 className="text-5xl font-semibold tracking-tight text-primary">VinoVonk</h1>
+        <h1 className="text-5xl font-semibold tracking-tight text-primary font-display">VinoVonk</h1>
         <p className="text-muted-foreground text-lg">
           Proefnotities volgens WSET Level 3
         </p>
@@ -116,7 +116,7 @@ export default function Dashboard() {
       {/* Snelstart */}
       <div className="flex gap-3">
         <Link href="/sessie/nieuw" className="flex-1 min-w-0">
-          <Button size="lg" className="w-full text-base py-6">
+          <Button size="lg" className="w-full text-base py-6 shadow-md hover:shadow-lg transition-shadow">
             <PlusCircle className="h-5 w-5 shrink-0 mr-2" />
             <span className="truncate">Nieuwe proefsessie starten</span>
           </Button>
@@ -157,15 +157,41 @@ export default function Dashboard() {
       <div className="space-y-3">
         <h2 className="text-lg font-semibold">Recente sessies</h2>
         {loading ? (
-          <Card>
-            <CardContent className="py-8 text-center text-muted-foreground">Laden...</CardContent>
-          </Card>
+          <div aria-live="polite" className="space-y-2">
+            {[1, 2, 3].map((i) => (
+              <Card key={i}>
+                <CardHeader className="py-4">
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex-1 space-y-2">
+                      <div className="h-4 w-40 bg-muted animate-pulse rounded" />
+                      <div className="flex items-center gap-3">
+                        <div className="h-3.5 w-24 bg-muted animate-pulse rounded" />
+                        <div className="h-3.5 w-16 bg-muted animate-pulse rounded" />
+                      </div>
+                    </div>
+                    <div className="h-6 w-6 bg-muted animate-pulse rounded" />
+                  </div>
+                </CardHeader>
+              </Card>
+            ))}
+            <span className="sr-only">Sessies worden geladen...</span>
+          </div>
         ) : sessies.length === 0 ? (
-          <Card>
-            <CardContent className="py-8 text-center text-muted-foreground">
-              <Wine className="h-12 w-12 mx-auto mb-3 opacity-30" />
-              <p>Nog geen proefsessies.</p>
-              <p className="text-sm mt-1">Start je eerste sessie hierboven!</p>
+          <Card className="border-dashed border-2">
+            <CardContent className="py-12 text-center">
+              <div className="inline-flex items-center justify-center h-16 w-16 rounded-full bg-primary/10 mb-4">
+                <Wine className="h-8 w-8 text-primary/60" />
+              </div>
+              <p className="text-foreground font-medium">Nog geen proefsessies</p>
+              <p className="text-sm text-muted-foreground mt-1 mb-4">
+                Begin je WSET-reis — maak je eerste proefnotitie.
+              </p>
+              <Link href="/sessie/nieuw">
+                <Button variant="outline" size="sm" className="gap-1.5">
+                  <PlusCircle className="h-4 w-4" />
+                  Eerste sessie starten
+                </Button>
+              </Link>
             </CardContent>
           </Card>
         ) : (
@@ -173,7 +199,7 @@ export default function Dashboard() {
             {sessies.map((sessie) => (
               <Card
                 key={sessie.id}
-                className={`hover:bg-accent/50 transition-colors ${
+                className={`cursor-pointer hover:bg-accent/50 hover:shadow-md transition-all duration-200 ${
                   isSelectMode && selectedSessies.has(sessie.id) ? "ring-2 ring-primary" : ""
                 }`}
               >
@@ -188,6 +214,9 @@ export default function Dashboard() {
                         />
                         <div
                           onClick={() => toggleSelectSessie(sessie.id)}
+                          onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleSelectSessie(sessie.id); } }}
+                          role="button"
+                          tabIndex={0}
                           className="flex-1 cursor-pointer"
                         >
                           <div className="space-y-1">
@@ -243,11 +272,16 @@ export default function Dashboard() {
                             size="sm"
                             onClick={(e) => handleDeleteSessie(sessie.id, sessie.naam, e)}
                             className="text-muted-foreground hover:text-destructive h-10 w-10"
+                            aria-label={`Sessie "${sessie.naam}" verwijderen`}
                           >
                             <Trash2 className="h-5 w-5" />
                           </Button>
-                          <Link href={`/sessie/${sessie.id}`}>
-                            <ChevronRight className="h-6 w-6 text-muted-foreground" />
+                          <Link
+                            href={`/sessie/${sessie.id}`}
+                            className="flex items-center justify-center h-10 w-10 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+                            aria-label={`Open sessie "${sessie.naam}"`}
+                          >
+                            <ChevronRight className="h-6 w-6" />
                           </Link>
                         </div>
                       </>

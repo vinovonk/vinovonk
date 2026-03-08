@@ -24,15 +24,16 @@ export default function Archief() {
 
   return (
     <div className="space-y-6 pb-20 md:pb-8">
-      <h1 className="text-2xl font-bold">Archief</h1>
+      <h1 className="text-3xl font-semibold">Archief</h1>
 
       {/* Zoekbalk */}
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" aria-hidden="true" />
         <Input
           placeholder="Zoek sessie..."
           value={zoekterm}
           onChange={(e) => setZoekterm(e.target.value)}
+          aria-label="Zoek sessies"
           className="pl-9"
         />
       </div>
@@ -54,7 +55,7 @@ export default function Archief() {
         <div className="space-y-2">
           {filtered.map((sessie) => (
             <Link key={sessie.id} href={`/sessie/${sessie.id}`}>
-              <Card className="hover:bg-accent/50 transition-colors cursor-pointer">
+              <Card className="hover:shadow-md hover:border-accent transition-all duration-200 cursor-pointer">
                 <CardHeader className="py-4">
                   <div className="flex items-center justify-between">
                     <div className="space-y-1">

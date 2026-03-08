@@ -54,6 +54,23 @@ AI-provider abstractie: `src/lib/ai/provider.ts`
 
 Elk dranktype heeft een eigen form-component in `src/components/proeven/` en een eigen type in `src/types/`.
 
+### Twee-staps flow (wijn & champagne)
+
+Wijn en champagne hebben een twee-staps proefproces:
+1. **Info-fase** — wijnnaam, druif, land, regio, foto (in `fles/[flesId]/page.tsx`)
+2. **Proeven-fase** — SAT-tabs: Appearance → Nose → Palate → Conclusions → Details
+
+De stap-indicator toont genummerde cirkels met verbindingslijn. De "Volgende" knop is sticky op mobile (boven de bottom nav).
+
+Het **Vibe-veld** staat bovenaan de Nose-tab: een persoonlijke, vrije-tekst eerste indruk (in `wset-nose.tsx` en `champagne-form.tsx`). Visueel onderscheiden van reguliere velden met een warm getint kader.
+
+### Validatie-navigatie
+
+Bij opslaan controleert het formulier verplichte velden. Als er velden ontbreken:
+- Automatische navigatie naar de tab met het eerste ontbrekende veld
+- Toast met gegroepeerde veldnamen per tab + action button ("Ga naar [tab]")
+- Geïmplementeerd in `wset-form.tsx` en `champagne-form.tsx`
+
 ### Biodynamische kalender
 
 `src/lib/biodynamisch.ts` — client-side berekening van de maanpositie (siderisch, vereenvoudigd Meeus-algoritme). Geen externe API, geen npm-pakket.

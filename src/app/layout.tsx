@@ -63,8 +63,14 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <a
+            href="#main-content"
+            className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[60] focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-md focus:text-sm focus:font-medium"
+          >
+            Naar inhoud
+          </a>
           <Header />
-          <main className="container mx-auto px-4 py-6 max-w-4xl">
+          <main id="main-content" className="container mx-auto px-4 py-6 max-w-4xl">
             {children}
           </main>
           <Toaster />

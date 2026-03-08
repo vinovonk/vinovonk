@@ -85,7 +85,7 @@ export default function Instellingen() {
 
   return (
     <div className="space-y-6 pb-20 md:pb-8">
-      <h1 className="text-2xl font-bold">Instellingen</h1>
+      <h1 className="text-3xl font-semibold">Instellingen</h1>
 
       {/* Thema */}
       <Card>
@@ -101,7 +101,6 @@ export default function Instellingen() {
             <div className="flex gap-2">
               <Button
                 variant={theme === "light" ? "default" : "outline"}
-                size="sm"
                 onClick={() => setTheme("light")}
                 className="flex-1"
               >
@@ -110,7 +109,6 @@ export default function Instellingen() {
               </Button>
               <Button
                 variant={theme === "dark" ? "default" : "outline"}
-                size="sm"
                 onClick={() => setTheme("dark")}
                 className="flex-1"
               >
@@ -119,7 +117,6 @@ export default function Instellingen() {
               </Button>
               <Button
                 variant={theme === "system" ? "default" : "outline"}
-                size="sm"
                 onClick={() => setTheme("system")}
                 className="flex-1"
               >
@@ -180,7 +177,7 @@ export default function Instellingen() {
             Over VinoVonk Tasting Tool
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-2 text-sm text-muted-foreground">
+        <CardContent className="space-y-2 text-sm text-muted-foreground font-body">
           <p>
             Deze tool helpt je bij het maken van gestructureerde proefnotities
             volgens het WSET Level 3 Systematic Approach to Tasting (SAT).

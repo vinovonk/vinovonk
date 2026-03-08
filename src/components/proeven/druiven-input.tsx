@@ -111,17 +111,33 @@ export function DruivenInput({ druiven, onChange, wijnType, land, regio }: Druiv
             // Vertraging om klik op suggestie te detecteren
             setTimeout(() => setShowSuggesties(false), 200);
           }}
+          role="combobox"
+          aria-expanded={showSuggesties && suggesties.length > 0}
+          aria-controls="druiven-listbox"
+          aria-autocomplete="list"
+          aria-activedescendant={
+            showSuggesties && suggesties.length > 0
+              ? `druif-option-${geselecteerdeIndex}`
+              : undefined
+          }
           className="text-base h-11"
         />
       </div>
 
       {/* Autocomplete suggesties dropdown */}
       {showSuggesties && suggesties.length > 0 && (
-        <div className="absolute z-50 w-full mt-1 bg-background border border-border rounded-md shadow-lg max-h-60 overflow-auto">
+        <div
+          id="druiven-listbox"
+          role="listbox"
+          className="absolute z-50 w-full mt-1 bg-background border border-border rounded-md shadow-lg max-h-60 overflow-auto"
+        >
           {suggesties.slice(0, 10).map((druif, index) => (
             <button
               key={druif.naam}
+              id={`druif-option-${index}`}
               type="button"
+              role="option"
+              aria-selected={index === geselecteerdeIndex}
               onClick={() => voegDruifToe(druif.naam)}
               className={`w-full text-left px-4 py-2.5 text-base transition-colors ${
                 index === geselecteerdeIndex

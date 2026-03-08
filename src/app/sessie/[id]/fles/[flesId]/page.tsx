@@ -218,7 +218,8 @@ export default function FlesProeven() {
       setWijnSummary(parts.join(" · "));
     }
     setFaseProeven("proeven");
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    const shouldAnimate = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: 0, behavior: shouldAnimate ? "smooth" : "auto" });
   }, [drankType]);
 
   if (loading) {
@@ -248,7 +249,8 @@ export default function FlesProeven() {
         <button
           onClick={() => {
             setFaseProeven("info");
-            window.scrollTo({ top: 0, behavior: "smooth" });
+            const shouldAnimate = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            window.scrollTo({ top: 0, behavior: shouldAnimate ? "smooth" : "auto" });
           }}
           className="text-sm text-muted-foreground hover:text-foreground flex items-center gap-1"
         >
@@ -259,28 +261,73 @@ export default function FlesProeven() {
 
       {/* Stap indicator (wijn & champagne) */}
       {isTweeStaps && (
-        <div className="space-y-0.5">
-          <div className="flex items-center gap-2 text-sm">
-            <span
-              className={
-                faseProeven === "info" ? "font-semibold text-foreground" : "text-muted-foreground"
-              }
+        <div className="space-y-2">
+          <div className="flex items-center gap-3 text-sm">
+            {/* Stap 1 */}
+            <button
+              type="button"
+              onClick={() => {
+                if (faseProeven === "proeven") {
+                  setFaseProeven("info");
+                  const shouldAnimate = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+                  window.scrollTo({ top: 0, behavior: shouldAnimate ? "smooth" : "auto" });
+                }
+              }}
+              className="flex items-center gap-2 group"
+              aria-current={faseProeven === "info" ? "step" : undefined}
             >
-              1 — {isChampagne ? "Champagne info" : "Wijn info"}
-            </span>
-            <ChevronRight className="h-3.5 w-3.5 text-muted-foreground" />
-            <span
-              className={
-                faseProeven === "proeven"
-                  ? "font-semibold text-foreground"
-                  : "text-muted-foreground"
-              }
+              <span
+                className={`flex items-center justify-center h-7 w-7 rounded-full text-xs font-semibold transition-colors ${
+                  faseProeven === "info"
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-primary/15 text-primary"
+                }`}
+              >
+                {faseProeven === "proeven" ? "✓" : "1"}
+              </span>
+              <span
+                className={`transition-colors ${
+                  faseProeven === "info"
+                    ? "font-semibold text-foreground"
+                    : "text-muted-foreground group-hover:text-foreground"
+                }`}
+              >
+                {isChampagne ? "Info" : "Wijn info"}
+              </span>
+            </button>
+
+            {/* Verbindingslijn */}
+            <div className={`flex-1 h-0.5 rounded-full transition-colors ${
+              faseProeven === "proeven" ? "bg-primary/30" : "bg-muted"
+            }`} />
+
+            {/* Stap 2 */}
+            <div
+              className="flex items-center gap-2"
+              aria-current={faseProeven === "proeven" ? "step" : undefined}
             >
-              2 — Proeven
-            </span>
+              <span
+                className={`flex items-center justify-center h-7 w-7 rounded-full text-xs font-semibold transition-colors ${
+                  faseProeven === "proeven"
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-muted text-muted-foreground"
+                }`}
+              >
+                2
+              </span>
+              <span
+                className={`transition-colors ${
+                  faseProeven === "proeven"
+                    ? "font-semibold text-foreground"
+                    : "text-muted-foreground"
+                }`}
+              >
+                Proeven
+              </span>
+            </div>
           </div>
           {faseProeven === "proeven" && wijnSummary && (
-            <p className="text-xs text-muted-foreground/70 truncate">{wijnSummary}</p>
+            <p className="text-xs text-muted-foreground/70 truncate pl-9">{wijnSummary}</p>
           )}
         </div>
       )}
@@ -325,16 +372,18 @@ export default function FlesProeven() {
         />
       )}
 
-      {/* Volgende knop: van info naar proeven */}
+      {/* Volgende knop: van info naar proeven — sticky op mobile */}
       {isTweeStaps && faseProeven === "info" && (
-        <button
-          type="button"
-          onClick={handleNaarProeven}
-          className="w-full h-12 rounded-md bg-primary text-primary-foreground text-base font-medium flex items-center justify-center gap-2 hover:opacity-90 transition-opacity"
-        >
-          Volgende — start met proeven
-          <ChevronRight className="h-4 w-4" />
-        </button>
+        <div className="fixed bottom-[calc(3.5rem+env(safe-area-inset-bottom))] left-0 right-0 md:static md:bottom-auto p-4 md:p-0 bg-gradient-to-t from-background via-background to-background/0 md:bg-none z-40">
+          <button
+            type="button"
+            onClick={handleNaarProeven}
+            className="w-full h-12 rounded-md bg-primary text-primary-foreground text-base font-medium flex items-center justify-center gap-2 hover:opacity-90 transition-opacity shadow-lg md:shadow-none"
+          >
+            Volgende — start met proeven
+            <ChevronRight className="h-4 w-4" />
+          </button>
+        </div>
       )}
 
       {drankType === "spirit" && (

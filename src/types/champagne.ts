@@ -57,6 +57,7 @@ export interface ChampagneTasting {
 
   // 2. Neus (Nose)
   neus: {
+    vibe?: string; // persoonlijke eerste indruk
     intensiteit: ChampagneIntensiteit | null;
     autolytischKarakter: AutolytischKarakter | null;
     oxidatiefKarakter: OxidatiefKarakter | null;
@@ -108,6 +109,7 @@ export function createEmptyChampagneTasting(): ChampagneTasting {
       overig: '',
     },
     neus: {
+      vibe: '',
       intensiteit: null,
       autolytischKarakter: null,
       oxidatiefKarakter: null,
