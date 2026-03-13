@@ -38,7 +38,7 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: "VinoVonk — Proefnotities",
-  description: "WSET Level 3 proefnotities voor wijn, spirits en meer",
+  description: "Systematisch proefdagboek voor wijn en champagne — SAT-methode",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,

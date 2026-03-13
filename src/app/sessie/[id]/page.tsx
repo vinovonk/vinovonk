@@ -223,70 +223,86 @@ export default function SessieDetail() {
           </CardContent>
         </Card>
       ) : (
-        <div className="space-y-3">
-          {sessie.flessen.map((fles, index) => {
-            const td = fles.tastingData;
-            const naam = td
-              ? "wijnNaam" in td && (td as { wijnNaam: string }).wijnNaam
-                ? (td as { wijnNaam: string }).wijnNaam
-                : "cuveeNaam" in td && (td as { cuveeNaam: string }).cuveeNaam
-                  ? (td as { cuveeNaam: string }).cuveeNaam
-                  : "naam" in td && (td as { naam: string }).naam
-                    ? (td as { naam: string }).naam
-                    : ""
-              : "";
+        <div>
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="text-xs font-bold tracking-widest uppercase text-muted-foreground border-l-[3px] border-l-primary pl-2">
+              Flessen
+            </h2>
+            <span className="text-xs font-black tabular-nums text-muted-foreground" aria-label={`${sessie.flessen.length} flessen`}>
+              {sessie.flessen.length}
+            </span>
+          </div>
+          <div className="shadow-brutalist">
+            {sessie.flessen.map((fles, index) => {
+              const td = fles.tastingData;
+              const naam = td
+                ? "wijnNaam" in td && (td as { wijnNaam: string }).wijnNaam
+                  ? (td as { wijnNaam: string }).wijnNaam
+                  : "cuveeNaam" in td && (td as { cuveeNaam: string }).cuveeNaam
+                    ? (td as { cuveeNaam: string }).cuveeNaam
+                    : "naam" in td && (td as { naam: string }).naam
+                      ? (td as { naam: string }).naam
+                      : ""
+                : "";
 
-            return (
-              <Card
-                key={fles.id}
-                className="hover:shadow-md hover:border-accent transition-all duration-200"
-              >
-                <CardHeader className="py-4 px-5">
-                  <div className="flex items-center justify-between">
-                    <Link
-                      href={`/sessie/${id}/fles/${fles.id}`}
-                      className="flex-1 min-h-[44px] flex items-center"
-                    >
-                      <div className="flex items-center gap-4">
-                        <span className="text-xl font-bold text-muted-foreground/40 w-8">
-                          {index + 1}
-                        </span>
-                        <div>
-                          <CardTitle className="text-lg font-semibold">
-                            {naam || "Nieuwe fles"}
-                          </CardTitle>
-                          <div className="flex items-center gap-2 mt-1.5">
-                            <Badge variant="outline" className="text-sm px-2.5 py-0.5 capitalize">
-                              {fles.drankType}
-                            </Badge>
-                            {fles.score !== undefined && (
-                              <Badge variant="secondary" className="text-sm px-2.5 py-0.5">
-                                {fles.score}/100
+              return (
+                <Card
+                  key={fles.id}
+                  className={`rounded-none shadow-none border-l-[3px] border-l-primary hover:bg-accent/50 transition-colors duration-200 ${
+                    index > 0 ? "border-t-0" : ""
+                  }`}
+                >
+                  <CardHeader className="py-4 px-5">
+                    <div className="flex items-center gap-3">
+                      <span aria-hidden="true" className="text-2xl font-black text-foreground/10 w-10 text-center tabular-nums shrink-0 select-none">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                      <div className="flex items-center justify-between flex-1 min-w-0">
+                        <Link
+                          href={`/sessie/${id}/fles/${fles.id}`}
+                          className="flex-1 min-h-[44px] flex items-center min-w-0"
+                        >
+                          <div className="min-w-0">
+                            <CardTitle className="text-lg font-semibold">
+                              {naam || "Nieuwe fles"}
+                            </CardTitle>
+                            <div className="flex items-center gap-2 mt-1.5">
+                              <Badge variant="outline" className="text-sm px-2.5 py-0.5 capitalize">
+                                {fles.drankType}
                               </Badge>
-                            )}
+                              {fles.score !== undefined && (
+                                <Badge variant="secondary" className="text-sm px-2.5 py-0.5">
+                                  {fles.score}/100
+                                </Badge>
+                              )}
+                            </div>
                           </div>
+                        </Link>
+                        <div className="flex items-center gap-1 shrink-0">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleDeleteFles(fles.id)}
+                            aria-label={`Fles "${naam || "Nieuwe fles"}" verwijderen`}
+                            className="text-muted-foreground hover:text-destructive h-11 w-11"
+                          >
+                            <Trash2 className="h-5 w-5" />
+                          </Button>
+                          <Link
+                            href={`/sessie/${id}/fles/${fles.id}`}
+                            className="flex items-center justify-center h-10 w-10 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+                            aria-label={`Open fles "${naam || "Nieuwe fles"}"`}
+                          >
+                            <ChevronRight className="h-6 w-6" />
+                          </Link>
                         </div>
                       </div>
-                    </Link>
-                    <div className="flex items-center gap-1">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleDeleteFles(fles.id)}
-                        aria-label="Fles verwijderen"
-                        className="text-muted-foreground hover:text-destructive h-11 w-11"
-                      >
-                        <Trash2 className="h-5 w-5" />
-                      </Button>
-                      <Link href={`/sessie/${id}/fles/${fles.id}`}>
-                        <ChevronRight className="h-6 w-6 text-muted-foreground" />
-                      </Link>
                     </div>
-                  </div>
-                </CardHeader>
-              </Card>
-            );
-          })}
+                  </CardHeader>
+                </Card>
+              );
+            })}
+          </div>
         </div>
       )}
     </div>

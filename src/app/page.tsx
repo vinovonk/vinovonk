@@ -104,9 +104,9 @@ export default function Dashboard() {
     <div className="space-y-8 pb-20 md:pb-8">
       {/* Hero */}
       <div className="text-center space-y-3 py-2">
-        <h1 className="text-5xl font-semibold tracking-tight text-primary font-display">VinoVonk</h1>
+        <h1 className="text-5xl font-semibold tracking-widest uppercase text-primary font-display">VinoVonk</h1>
         <p className="text-muted-foreground text-lg">
-          Proefnotities volgens WSET Level 3
+          Systematisch proefdagboek · wijn &amp; champagne
         </p>
       </div>
 
@@ -155,7 +155,16 @@ export default function Dashboard() {
 
       {/* Recente sessies */}
       <div className="space-y-3">
-        <h2 className="text-lg font-semibold">Recente sessies</h2>
+        <div className="flex items-center justify-between">
+          <h2 className="text-xs font-bold tracking-widest uppercase text-muted-foreground border-l-[3px] border-l-primary pl-2">
+            Recente sessies
+          </h2>
+          {!loading && sessies.length > 0 && (
+            <span className="text-xs font-black tabular-nums text-muted-foreground" aria-label={`${sessies.length} sessies`}>
+              {sessies.length}
+            </span>
+          )}
+        </div>
         {loading ? (
           <div aria-live="polite" className="space-y-2">
             {[1, 2, 3].map((i) => (
@@ -184,7 +193,7 @@ export default function Dashboard() {
               </div>
               <p className="text-foreground font-medium">Nog geen proefsessies</p>
               <p className="text-sm text-muted-foreground mt-1 mb-4">
-                Begin je WSET-reis — maak je eerste proefnotitie.
+                Maak je eerste systematische proefnotitie.
               </p>
               <Link href="/sessie/nieuw">
                 <Button variant="outline" size="sm" className="gap-1.5">
@@ -195,16 +204,21 @@ export default function Dashboard() {
             </CardContent>
           </Card>
         ) : (
-          <div className="space-y-2">
-            {sessies.map((sessie) => (
+          <div className="shadow-brutalist">
+            {sessies.map((sessie, index) => (
               <Card
                 key={sessie.id}
-                className={`cursor-pointer hover:bg-accent/50 hover:shadow-md transition-all duration-200 ${
-                  isSelectMode && selectedSessies.has(sessie.id) ? "ring-2 ring-primary" : ""
+                className={`rounded-none shadow-none border-l-[3px] border-l-primary cursor-pointer hover:bg-accent/50 transition-colors duration-200 ${
+                  index > 0 ? "border-t-0" : ""
+                } ${
+                  isSelectMode && selectedSessies.has(sessie.id) ? "bg-primary/5" : ""
                 }`}
               >
                 <CardHeader className="py-4">
-                  <div className="flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-3">
+                    <span aria-hidden="true" className="text-2xl font-black text-foreground/10 w-10 text-center tabular-nums shrink-0 select-none">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
                     {isSelectMode ? (
                       <div className="flex items-center gap-3 flex-1 min-h-[44px]">
                         <Checkbox
@@ -241,12 +255,12 @@ export default function Dashboard() {
                         </div>
                       </div>
                     ) : (
-                      <>
+                      <div className="flex items-center justify-between gap-3 flex-1 min-w-0">
                         <Link
                           href={`/sessie/${sessie.id}`}
-                          className="flex-1 min-h-[44px] flex items-center"
+                          className="flex-1 min-h-[44px] flex items-center min-w-0"
                         >
-                          <div className="space-y-1">
+                          <div className="space-y-1 min-w-0">
                             <CardTitle className="text-base">{sessie.naam}</CardTitle>
                             <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
                               <span className="flex items-center gap-1">
@@ -266,7 +280,7 @@ export default function Dashboard() {
                             </div>
                           </div>
                         </Link>
-                        <div className="flex items-center gap-1">
+                        <div className="flex items-center gap-1 shrink-0">
                           <Button
                             variant="ghost"
                             size="sm"
@@ -284,7 +298,7 @@ export default function Dashboard() {
                             <ChevronRight className="h-6 w-6" />
                           </Link>
                         </div>
-                      </>
+                      </div>
                     )}
                   </div>
                 </CardHeader>

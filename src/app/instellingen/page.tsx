@@ -2,6 +2,7 @@
 
 import { useTheme } from "next-themes";
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Sun, Moon, Monitor, Download, Upload, Info, HardDrive } from "lucide-react";
@@ -85,7 +86,7 @@ export default function Instellingen() {
 
   return (
     <div className="space-y-6 pb-20 md:pb-8">
-      <h1 className="text-3xl font-semibold">Instellingen</h1>
+      <h1 className="text-3xl font-black tracking-tight">Instellingen</h1>
 
       {/* Thema */}
       <Card>
@@ -169,25 +170,33 @@ export default function Instellingen() {
         </CardContent>
       </Card>
 
-      {/* Info */}
+      {/* Over */}
       <Card>
         <CardHeader>
           <CardTitle className="text-lg flex items-center gap-2">
             <Info className="h-5 w-5" />
-            Over VinoVonk Tasting Tool
+            Over de app
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-2 text-sm text-muted-foreground font-body">
+        <CardContent className="space-y-3 text-sm text-muted-foreground">
           <p>
-            Deze tool helpt je bij het maken van gestructureerde proefnotities
-            volgens het WSET Level 3 Systematic Approach to Tasting (SAT).
+            Systematisch proefdagboek voor wijn &amp; champagne — gemaakt door Jeroen Vonk van{" "}
+            <a
+              href="https://vinovonk.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary font-semibold underline underline-offset-2 hover:opacity-75 transition-opacity"
+            >
+              VinoVonk.com
+            </a>
+            .
           </p>
-          <p>
-            Alle data wordt lokaal opgeslagen in je browser. Er worden geen
-            gegevens naar externe servers gestuurd.
-          </p>
-          <p>Ondersteunde dranken: wijn, champagne, spirits, bier, sake en meer.</p>
-          <p className="font-medium text-foreground mt-3">Gemaakt voor VinoVonk.com</p>
+          <Link
+            href="/over"
+            className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:opacity-75 transition-opacity"
+          >
+            Meer over de methode en aanpak →
+          </Link>
         </CardContent>
       </Card>
     </div>

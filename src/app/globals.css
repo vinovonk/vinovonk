@@ -51,37 +51,40 @@
 }
 
 :root {
-  --radius: 0.5rem;
+  --radius: 0.625rem;
 
-  /* Warm white background — subtle cream */
-  --background: oklch(0.993 0.004 60);
+  /* Warm crème — iets warmer dan voorheen, dichter bij vinovonk.com */
+  --background: oklch(0.965 0.010 65);
   --foreground: oklch(0.12 0.01 20);
 
-  /* Cards — very slightly warm white */
-  --card: oklch(1 0.003 60);
+  /* Cards — warm wit */
+  --card: oklch(0.998 0.003 60);
   --card-foreground: oklch(0.12 0.01 20);
-  --popover: oklch(1 0.003 60);
+  --popover: oklch(0.998 0.003 60);
   --popover-foreground: oklch(0.12 0.01 20);
 
-  /* Primary — deep burgundy/wine red */
-  --primary: oklch(0.38 0.11 15);
+  /* Primary — crimson rood, match vinovonk.com (#B71C1C) */
+  --primary: oklch(0.42 0.20 25);
   --primary-foreground: oklch(0.975 0.005 60);
 
-  /* Secondary & muted — warm grays */
-  --secondary: oklch(0.95 0.005 55);
+  /* Goud accent — voor streep en kleine details */
+  --gold: #C8960C;
+
+  /* Secondary & muted — warme grijzen */
+  --secondary: oklch(0.93 0.006 55);
   --secondary-foreground: oklch(0.15 0.01 20);
-  --muted: oklch(0.96 0.004 55);
+  --muted: oklch(0.94 0.005 55);
   --muted-foreground: oklch(0.40 0.008 40);
-  --accent: oklch(0.95 0.005 55);
+  --accent: oklch(0.93 0.006 55);
   --accent-foreground: oklch(0.15 0.01 20);
 
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.99 0 0);
 
-  /* Borders & inputs — warm gray */
-  --border: oklch(0.87 0.007 55);
-  --input: oklch(0.87 0.007 55);
-  --ring: oklch(0.55 0.07 15);
+  /* Borders & inputs — iets donkerder voor meer kaart-definitie */
+  --border: oklch(0.78 0.010 40);
+  --input: oklch(0.82 0.008 45);
+  --ring: oklch(0.52 0.12 25);
 
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
@@ -89,14 +92,14 @@
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
 
-  --sidebar: oklch(0.99 0.003 60);
+  --sidebar: oklch(0.96 0.008 60);
   --sidebar-foreground: oklch(0.12 0.01 20);
-  --sidebar-primary: oklch(0.38 0.11 15);
+  --sidebar-primary: oklch(0.42 0.20 25);
   --sidebar-primary-foreground: oklch(0.975 0.005 60);
-  --sidebar-accent: oklch(0.95 0.005 55);
+  --sidebar-accent: oklch(0.93 0.006 55);
   --sidebar-accent-foreground: oklch(0.15 0.01 20);
-  --sidebar-border: oklch(0.87 0.007 55);
-  --sidebar-ring: oklch(0.55 0.07 15);
+  --sidebar-border: oklch(0.78 0.010 40);
+  --sidebar-ring: oklch(0.52 0.12 25);
 }
 
 .dark {
@@ -109,9 +112,9 @@
   --popover: oklch(0.165 0.008 20);
   --popover-foreground: oklch(0.95 0.005 55);
 
-  /* Primary — lighter wine/rosé for dark mode */
-  --primary: oklch(0.78 0.08 15);
-  --primary-foreground: oklch(0.12 0.01 20);
+  /* Primary — diep wijnrood, werkt als header-achtergrond én tekstkleur */
+  --primary: oklch(0.46 0.18 22);
+  --primary-foreground: oklch(0.975 0.005 60);
 
   --secondary: oklch(0.22 0.008 20);
   --secondary-foreground: oklch(0.92 0.005 55);
@@ -135,8 +138,8 @@
 
   --sidebar: oklch(0.165 0.008 20);
   --sidebar-foreground: oklch(0.95 0.005 55);
-  --sidebar-primary: oklch(0.78 0.08 15);
-  --sidebar-primary-foreground: oklch(0.12 0.01 20);
+  --sidebar-primary: oklch(0.46 0.18 22);
+  --sidebar-primary-foreground: oklch(0.975 0.005 60);
   --sidebar-accent: oklch(0.22 0.008 20);
   --sidebar-accent-foreground: oklch(0.92 0.005 55);
   --sidebar-border: oklch(0.27 0.008 20);
@@ -191,4 +194,12 @@ main {
   main {
     animation: none;
   }
+}
+
+/* Brutalist offset shadow — thema-bewust, licht én donker */
+.shadow-brutalist {
+  box-shadow: 4px 4px 0 0 oklch(0.15 0 0);
+}
+.dark .shadow-brutalist {
+  box-shadow: 4px 4px 0 0 oklch(0.38 0 0);
 }

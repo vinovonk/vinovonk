@@ -4,13 +4,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-import { Wine, PlusCircle, Archive, Settings, Sun, Moon } from "lucide-react";
+import { Wine, PlusCircle, Archive, Settings, Info, Sun, Moon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navItems = [
   { href: "/", label: "Dashboard", icon: Wine },
-  { href: "/sessie/nieuw", label: "Nieuwe sessie", icon: PlusCircle },
+  { href: "/sessie/nieuw", label: "Nieuw", icon: PlusCircle },
   { href: "/archief", label: "Archief", icon: Archive },
+  { href: "/over", label: "Over", icon: Info },
   { href: "/instellingen", label: "Instellingen", icon: Settings },
 ];
 
@@ -24,13 +25,13 @@ export function Header() {
   const toggleTheme = () => setTheme(resolvedTheme === "dark" ? "light" : "dark");
 
   return (
-    <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
+    <header className="bg-primary sticky top-0 z-50">
       <div className="container mx-auto px-4 max-w-4xl">
         {/* Logo + Naam */}
         <div className="flex items-center justify-between h-14">
           <Link href="/" className="flex items-center gap-2">
-            <Wine className="h-5 w-5 text-primary" />
-            <span className="font-semibold text-xl tracking-tight font-display text-foreground">VinoVonk</span>
+            <Wine className="h-5 w-5 text-white" />
+            <span className="font-semibold text-xl tracking-tight font-display text-white">VinoVonk</span>
           </Link>
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-1">
@@ -41,8 +42,8 @@ export function Header() {
                 className={cn(
                   "flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-colors",
                   pathname === item.href
-                    ? "bg-primary/10 text-primary"
-                    : "text-muted-foreground hover:text-foreground hover:bg-accent"
+                    ? "bg-white/15 text-white"
+                    : "text-white/80 hover:text-white hover:bg-white/10"
                 )}
               >
                 <item.icon className="h-4 w-4" />
@@ -53,7 +54,7 @@ export function Header() {
             {mounted && (
               <button
                 onClick={toggleTheme}
-                className="ml-1 p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+                className="ml-1 p-2 rounded-md text-white/70 hover:text-white hover:bg-white/10 transition-colors"
                 aria-label="Thema wisselen"
               >
                 {resolvedTheme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
@@ -64,7 +65,7 @@ export function Header() {
           {mounted && (
             <button
               onClick={toggleTheme}
-              className="md:hidden p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+              className="md:hidden p-2 rounded-md text-white/70 hover:text-white hover:bg-white/10 transition-colors"
               aria-label="Thema wisselen"
             >
               {resolvedTheme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
@@ -72,6 +73,8 @@ export function Header() {
           )}
         </div>
       </div>
+      {/* Gouden accent-streep */}
+      <div className="h-[3px] bg-gradient-to-r from-[#C8960C] via-[#F5C842] to-[#C8960C]" />
       {/* Mobile navigation bar */}
       <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-background border-t z-50 pb-[env(safe-area-inset-bottom)]">
         <div className="flex items-center justify-around h-14">
