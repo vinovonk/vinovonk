@@ -1,6 +1,6 @@
 # VinoVonk
 
-Persoonlijke proefnotities-app voor WSET Level 3. Noteer, bewaar en exporteer je tasting notes voor wijn, champagne, spirits, bier, sake en meer — volledig lokaal in je browser, zonder account of server.
+Persoonlijke systematisch proefdagboek voor wijn & champagne geschikt voor WSET Level 3. Noteer, bewaar en exporteer je tasting notes voor wijn, champagne, spirits, bier, sake en meer — volledig lokaal in je browser, zonder account of server.
 
 ## Features
 
