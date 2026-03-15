@@ -48,6 +48,7 @@ export default function NieuweSessie() {
                   placeholder="Bijv. Italiaanse wijnavond, Whisky tasting club..."
                   value={naam}
                   onChange={(e) => setNaam(e.target.value)}
+                  maxLength={200}
                   autoFocus
                   required
                 />
@@ -60,6 +61,7 @@ export default function NieuweSessie() {
                   placeholder="Context, aanleiding, gasten..."
                   value={beschrijving}
                   onChange={(e) => setBeschrijving(e.target.value)}
+                  maxLength={2000}
                   rows={3}
                 />
               </div>

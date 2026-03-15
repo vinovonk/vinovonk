@@ -71,6 +71,24 @@ Voor `cloud`-modus: voeg `ANTHROPIC_API_KEY` en `OPENAI_API_KEY` toe aan `.env.l
 
 Alle data blijft in je browser via `localStorage` — er is geen server, geen account en geen cloud-opslag. Notities, foto's en sessies verlaten het apparaat nooit. De app werkt volledig offline na de eerste keer laden.
 
+## Security
+
+De app is gebouwd met een defensief security-model. Overzicht van maatregelen:
+
+| Maatregel | Bestand | Details |
+|-----------|---------|---------|
+| **Backup-import validatie** | `src/lib/validation.ts` | Zod-schema valideert elk veld vóór opslag in localStorage. Max 8MB, alleen `vinovonk_*` keys. |
+| **Security headers** | `next.config.ts` | `X-Content-Type-Options`, `X-Frame-Options: DENY`, `Strict-Transport-Security`, `Referrer-Policy`, `Permissions-Policy` |
+| **Foto-upload validatie** | `src/components/proeven/foto-capture.tsx` | MIME-type whitelist (JPEG/PNG/WebP/HEIC), max 15MB vóór Canvas-compressie |
+| **localStorage quota** | `src/lib/storage-client.ts` | `QuotaExceededError` wordt opgevangen en getoond als toast |
+| **AI-response validatie** | `src/lib/validation.ts` | Zod-schema op Claude/Ollama JSON-output, met fallback op ongeldige data |
+| **AI request timeout** | `src/lib/ai/cloud-claude.ts` | 15s timeout op Claude API; 30s op Ollama |
+| **AI error sanitization** | `src/lib/ai/cloud-*.ts` | Ruwe API-foutberichten worden niet doorgestuurd naar de gebruiker |
+| **SSRF-bescherming** | `src/lib/ai/local-ollama.ts` | Ollama URL wordt gevalideerd — alleen `localhost`/`127.0.0.1`/`::1` toegestaan |
+| **Input-lengtebeperkingen** | `src/app/sessie/nieuw/page.tsx` | `maxLength` op naam (200) en beschrijving (2000) |
+
+API-sleutels (`ANTHROPIC_API_KEY`, `OPENAI_API_KEY`) zijn server-side only en worden nooit in de client-bundle meegenomen.
+
 ## Licentie
 
 MIT — zie [LICENSE](./LICENSE). Vrij te gebruiken, aanpassen en verspreiden, mits de oorspronkelijke auteursvermelding behouden blijft.

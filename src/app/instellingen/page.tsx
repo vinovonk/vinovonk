@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Sun, Moon, Monitor, Download, Upload, Info, HardDrive } from "lucide-react";
 import { toast } from "sonner";
+import { validateAndImportBackup } from "@/lib/validation";
 
 export default function Instellingen() {
   const { theme, setTheme } = useTheme();
@@ -57,17 +58,12 @@ export default function Instellingen() {
 
     const reader = new FileReader();
     reader.onload = (event) => {
-      try {
-        const backup = JSON.parse(event.target?.result as string) as Record<string, unknown>;
-        let count = 0;
-        Object.entries(backup).forEach(([key, value]) => {
-          if (key.startsWith("vinovonk_")) {
-            localStorage.setItem(key, JSON.stringify(value));
-            if (key.startsWith("vinovonk_session_") && key !== "vinovonk_sessions_index") count++;
-          }
-        });
+      const rawJson = event.target?.result as string;
+      const result = validateAndImportBackup(rawJson);
+
+      if (result.ok) {
         toast.success(
-          `Backup hersteld (${count} ${count === 1 ? "sessie" : "sessies"}) — herlaad de pagina`,
+          `Backup hersteld (${result.sessieCount} ${result.sessieCount === 1 ? "sessie" : "sessies"}) — herlaad de pagina`,
           {
             duration: 8000,
             action: {
@@ -76,8 +72,8 @@ export default function Instellingen() {
             },
           }
         );
-      } catch {
-        toast.error("Ongeldig backup bestand — controleer of het een VinoVonk JSON is.");
+      } else {
+        toast.error(`Ongeldige backup: ${result.error}`);
       }
     };
     reader.readAsText(file);

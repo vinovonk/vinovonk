@@ -27,8 +27,8 @@ export async function transcribeMetWhisperCloud(audioBlob: Blob): Promise<Transc
   });
 
   if (!res.ok) {
-    const errorBody = await res.text();
-    throw new Error(`Whisper API fout: ${res.status} — ${errorBody}`);
+    console.error(`Whisper API fout: ${res.status}`);
+    throw new Error('Spraakherkenning mislukt — probeer het opnieuw');
   }
 
   const data = await res.json();

@@ -3,6 +3,7 @@
 import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Camera, ImagePlus, X, RotateCcw } from "lucide-react";
+import { toast } from "sonner";
 
 interface FotoCaptureProps {
   fotoUrl?: string;
@@ -14,9 +15,26 @@ export function FotoCapture({ fotoUrl, onFotoChange }: FotoCaptureProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
 
+  const MAX_FILE_SIZE = 15 * 1024 * 1024; // 15MB
+  const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/heic', 'image/heif'];
+
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+
+    // Valideer bestandsgrootte
+    if (file.size > MAX_FILE_SIZE) {
+      toast.error("Afbeelding te groot (max 15MB)");
+      e.target.value = "";
+      return;
+    }
+
+    // Valideer MIME-type (laat ook lege type door voor camera capture)
+    if (file.type && !ALLOWED_TYPES.includes(file.type)) {
+      toast.error("Ongeldig bestandstype — gebruik JPEG, PNG of WebP");
+      e.target.value = "";
+      return;
+    }
 
     const url = URL.createObjectURL(file);
     setPreview(url);

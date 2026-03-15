@@ -18,8 +18,26 @@ function getIndex(): SessionSummary[] {
   }
 }
 
+function safeSetItem(key: string, value: string): boolean {
+  try {
+    localStorage.setItem(key, value);
+    return true;
+  } catch (e) {
+    if (e instanceof DOMException && e.name === 'QuotaExceededError') {
+      // Dynamische import om circulaire dependency te voorkomen
+      import('sonner').then(({ toast }) => {
+        toast.error('Opslag vol — verwijder oude sessies of foto\'s, of exporteer een backup en wis je data.', {
+          duration: 8000,
+        });
+      });
+    }
+    console.error('localStorage schrijffout:', e);
+    return false;
+  }
+}
+
 function setIndex(index: SessionSummary[]) {
-  localStorage.setItem(INDEX_KEY, JSON.stringify(index));
+  safeSetItem(INDEX_KEY, JSON.stringify(index));
 }
 
 function sessionKey(id: string) {
@@ -59,7 +77,7 @@ export function createSession(naam: string, beschrijving?: string): TastingSessi
     biodynamischDagType: getBiodynamischDagType(new Date()),
   };
 
-  localStorage.setItem(sessionKey(id), JSON.stringify(session));
+  safeSetItem(sessionKey(id), JSON.stringify(session));
 
   const index = getIndex();
   index.push({ id, naam, datum, aantalFlessen: 0, createdAt: now });
@@ -79,7 +97,7 @@ export function updateSession(id: string, updates: Partial<TastingSession>): Tas
     updatedAt: new Date().toISOString(),
   };
 
-  localStorage.setItem(sessionKey(id), JSON.stringify(updated));
+  safeSetItem(sessionKey(id), JSON.stringify(updated));
 
   // Update index
   const index = getIndex();

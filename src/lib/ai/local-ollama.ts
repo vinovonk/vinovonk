@@ -1,9 +1,27 @@
 // Lokale AI via Ollama — gratis, draait op je Mac
 import type { StructureringResult } from './provider';
 import { createEmptyWineTasting, type WsetWineTasting } from '@/types/wset-wine';
+import { validateAiResponse } from '@/lib/validation';
 
-const OLLAMA_URL = process.env.OLLAMA_URL || 'http://localhost:11434';
+const RAW_OLLAMA_URL = process.env.OLLAMA_URL || 'http://localhost:11434';
 const OLLAMA_MODEL = process.env.OLLAMA_MODEL || 'mistral';
+
+// Valideer dat Ollama URL naar localhost wijst (voorkom SSRF)
+function validateOllamaUrl(urlString: string): string {
+  try {
+    const url = new URL(urlString);
+    const allowedHosts = ['localhost', '127.0.0.1', '::1'];
+    if (!allowedHosts.includes(url.hostname)) {
+      console.error(`Ollama URL "${url.hostname}" is niet localhost — geblokkeerd`);
+      return 'http://localhost:11434';
+    }
+    return urlString;
+  } catch {
+    return 'http://localhost:11434';
+  }
+}
+
+const OLLAMA_URL = validateOllamaUrl(RAW_OLLAMA_URL);
 
 export async function isOllamaAvailable(): Promise<boolean> {
   try {
@@ -112,6 +130,7 @@ export async function structureerMetOllama(transcript: string): Promise<Structur
           temperature: 0.1, // Lage temperatuur voor consistente output
         },
       }),
+      signal: AbortSignal.timeout(30000), // 30s timeout voor lokale modellen
     });
 
     if (!res.ok) {
@@ -125,8 +144,9 @@ export async function structureerMetOllama(transcript: string): Promise<Structur
       throw new Error('Geen antwoord van Ollama');
     }
 
-    // Parse JSON uit het antwoord
-    const parsed = JSON.parse(content);
+    // Parse en valideer JSON uit het antwoord
+    const rawParsed = JSON.parse(content);
+    const parsed = validateAiResponse(rawParsed) || rawParsed;
 
     // Merge met lege tasting als fallback voor ontbrekende velden
     const empty = createEmptyWineTasting();

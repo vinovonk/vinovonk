@@ -1,6 +1,7 @@
 // Cloud AI via Anthropic Claude API — betaald, hogere kwaliteit
 import type { StructureringResult } from './provider';
 import { createEmptyWineTasting, type WsetWineTasting } from '@/types/wset-wine';
+import { validateAiResponse } from '@/lib/validation';
 
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
 
@@ -52,11 +53,12 @@ export async function structureerMetClaude(transcript: string): Promise<Structur
           { role: 'user', content: `Analyseer deze proefnotitie:\n\n${transcript}` },
         ],
       }),
+      signal: AbortSignal.timeout(15000),
     });
 
     if (!res.ok) {
-      const errorBody = await res.text();
-      throw new Error(`Claude API fout: ${res.status} — ${errorBody}`);
+      console.error(`Claude API fout: ${res.status}`);
+      throw new Error('AI-analyse mislukt — probeer het opnieuw');
     }
 
     const data = await res.json();
@@ -72,7 +74,8 @@ export async function structureerMetClaude(transcript: string): Promise<Structur
       throw new Error('Kon geen JSON vinden in Claude antwoord');
     }
 
-    const parsed = JSON.parse(jsonMatch[0]);
+    const rawParsed = JSON.parse(jsonMatch[0]);
+    const parsed = validateAiResponse(rawParsed) || rawParsed;
 
     // Merge met lege tasting als fallback
     const empty = createEmptyWineTasting();
