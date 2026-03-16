@@ -272,7 +272,7 @@ export default function SessieDetail() {
                               </Badge>
                               {fles.score !== undefined && (
                                 <Badge variant="secondary" className="text-sm px-2.5 py-0.5">
-                                  {fles.score}/100
+                                  {fles.score}/10
                                 </Badge>
                               )}
                             </div>

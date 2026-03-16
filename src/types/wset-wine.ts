@@ -122,7 +122,6 @@ export interface WsetWineTasting {
 
     // Persoonlijke Beoordeling
     opnieuwKopen: OpnieuwKopen | null;
-    prijsKwaliteitVerhouding: number | null; // 1-5 sterren
     aanbevolenVoor: AanbevolenVoor[];
   };
 }
@@ -184,7 +183,6 @@ export function createEmptyWineTasting(): WsetWineTasting {
       podcastAflevering: '',
       publicatieStatus: null,
       opnieuwKopen: null,
-      prijsKwaliteitVerhouding: null,
       aanbevolenVoor: [],
     },
   };

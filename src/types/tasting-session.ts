@@ -17,7 +17,7 @@ export interface TastingNote {
   transcript?: string;
   tastingData: TastingData;
   persoonlijkeNotitie?: string;
-  score?: number; // 0-100
+  score?: number; // 1-10
   createdAt: string;
   updatedAt: string;
 }

@@ -864,29 +864,29 @@ export const ChampagneForm = forwardRef<ChampagneFormHandle, ChampagneFormProps>
                 <Label className="text-base font-medium">Score</Label>
                 {score !== undefined ? (
                   <div className="flex items-center gap-3">
-                    <span className="text-2xl font-bold">{score}<span className="text-base font-normal text-muted-foreground">/100</span></span>
+                    <span className="text-2xl font-bold">{score}<span className="text-base font-normal text-muted-foreground">/10</span></span>
                     <button
                       type="button"
                       onClick={() => setScore(undefined)}
                       className="text-sm text-muted-foreground hover:text-foreground"
                     >
-                      Remove
+                      Verwijderen
                     </button>
                   </div>
                 ) : (
                   <button
                     type="button"
-                    onClick={() => setScore(85)}
+                    onClick={() => setScore(7)}
                     className="text-sm text-muted-foreground hover:text-foreground"
                   >
-                    Add score
+                    Score toevoegen
                   </button>
                 )}
               </div>
               {score !== undefined && (
                 <Slider
-                  min={50}
-                  max={100}
+                  min={1}
+                  max={10}
                   step={1}
                   value={[score]}
                   onValueChange={([v]) => setScore(v)}

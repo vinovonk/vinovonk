@@ -236,7 +236,6 @@ export const WsetForm = forwardRef<WsetFormHandle, WsetFormProps>(function WsetF
   const countDetails = data.details ? [
     data.details.herkomst,
     data.details.opnieuwKopen,
-    data.details.prijsKwaliteitVerhouding,
   ].filter(Boolean).length : 0;
 
   const toonInfo = !fase || fase === 'info';

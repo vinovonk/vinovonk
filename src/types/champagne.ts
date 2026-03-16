@@ -146,7 +146,6 @@ export function createEmptyChampagneTasting(): ChampagneTasting {
       podcastAflevering: '',
       publicatieStatus: null,
       opnieuwKopen: null,
-      prijsKwaliteitVerhouding: null,
       aanbevolenVoor: [],
     },
   };

@@ -14,7 +14,7 @@ const TastingNoteSchema = z.object({
   audioPath: z.string().optional(),
   transcript: z.string().optional(),
   persoonlijkeNotitie: z.string().optional(),
-  score: z.number().min(0).max(100).optional(),
+  score: z.number().min(1).max(10).optional(),
   createdAt: z.string(),
   updatedAt: z.string(),
 }).passthrough();

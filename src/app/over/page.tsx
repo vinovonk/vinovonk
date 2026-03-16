@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ExternalLink, GlassWater, BookOpen, Sparkles } from "lucide-react";
+import { ExternalLink, GlassWater, BookOpen, Sparkles, Star } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Over — VinoVonk",
@@ -110,6 +110,37 @@ export default function OverPage() {
             <p>
               De CIVC-aanpak vult de SAT aan met champagne-specifieke
               parameters die elders niet of nauwelijks worden gedekt.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Score */}
+      <section aria-labelledby="over-score">
+        <h2
+          id="over-score"
+          className="text-xs font-bold tracking-widest uppercase text-muted-foreground border-l-[3px] border-l-primary pl-2 mb-4"
+        >
+          De score — 1 tot 10
+        </h2>
+        <div className="flex gap-4 mb-3">
+          <div className="mt-0.5 shrink-0">
+            <Star className="h-5 w-5 text-primary/60" aria-hidden="true" />
+          </div>
+          <div className="space-y-2 text-base text-foreground/85 leading-relaxed">
+            <p>
+              Elke proefnotitie kan worden afgesloten met een persoonlijke score
+              op een schaal van{" "}
+              <strong className="text-foreground">1 tot 10</strong>. Dit is een
+              subjectief eindoordeel — los van de objectieve SAT- of
+              CIVC-analyse.
+            </p>
+            <p>
+              De score is optioneel en bedoeld als snelle referentie bij het
+              terugkijken of schrijven. Een <strong className="text-foreground">7</strong> is
+              goed, een <strong className="text-foreground">9</strong> is
+              uitzonderlijk. De score wordt meegenomen in de Markdown-export en
+              het Review-schema voor publicatie op VinoVonk.com.
             </p>
           </div>
         </div>

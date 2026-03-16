@@ -73,14 +73,14 @@ export function WsetConclusion({
         <div className="flex items-center justify-between">
           <Label>Score (optioneel)</Label>
           <span className="text-sm font-mono text-muted-foreground">
-            {score !== undefined ? `${score}/100` : "—"}
+            {score !== undefined ? `${score}/10` : "—"}
           </span>
         </div>
         <Slider
-          value={score !== undefined ? [score] : [75]}
+          value={score !== undefined ? [score] : [7]}
           onValueChange={(v) => onScoreChange(v[0])}
-          min={0}
-          max={100}
+          min={1}
+          max={10}
           step={1}
           className="w-full"
         />

@@ -58,7 +58,7 @@ De enige actieve API route is `/api/export` (PDF/Markdown export).
 TastingSession
 ├── id, naam, datum, beschrijving, biodynamischDagType
 └── flessen: TastingNote[]
-    ├── id, drankType, fotoPath (base64), score (0-100)
+    ├── id, drankType, fotoPath (base64), score (1-10, optioneel)
     └── tastingData: TastingData  ← UNION TYPE
 ```
 

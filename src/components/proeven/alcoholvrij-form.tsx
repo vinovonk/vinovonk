@@ -461,12 +461,12 @@ export const AlcoholVrijForm = forwardRef<AlcoholVrijFormHandle, AlcoholVrijForm
                   </div>
 
                   <div className="space-y-2">
-                    <Label>Score (optional, 0-100)</Label>
+                    <Label>Score (optioneel, 1-10)</Label>
                     <Input
                       type="number"
-                      min={0}
-                      max={100}
-                      placeholder="80"
+                      min={1}
+                      max={10}
+                      placeholder="7"
                       value={score ?? ""}
                       onChange={(e) => setScore(e.target.value ? parseInt(e.target.value) : undefined)}
                     />

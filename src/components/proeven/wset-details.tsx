@@ -6,7 +6,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { ButtonGroup } from "./button-group";
 import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
-import { StarRating } from "@/components/ui/star-rating";
 import type {
   Herkomst,
   OpnieuwKopen,
@@ -230,27 +229,6 @@ export function WsetDetails({ data, onChange, drankNaam = "wijn" }: WsetDetailsP
           waarde={data.opnieuwKopen}
           onChange={(v) => updateField("opnieuwKopen", v)}
         />
-
-        <div className="space-y-2.5">
-          <Label className="text-base font-medium">Prijs-kwaliteit verhouding</Label>
-          <div className="flex items-center gap-3">
-            <StarRating
-              value={data.prijsKwaliteitVerhouding || 0}
-              onChange={(v) => updateField("prijsKwaliteitVerhouding", v === 0 ? null : v)}
-              size="lg"
-              showValue
-            />
-            {data.prijsKwaliteitVerhouding && (
-              <button
-                type="button"
-                onClick={() => updateField("prijsKwaliteitVerhouding", null)}
-                className="text-sm text-muted-foreground hover:text-foreground underline"
-              >
-                Reset
-              </button>
-            )}
-          </div>
-        </div>
 
         <div className="space-y-2.5">
           <Label className="text-base font-medium">Aanbevolen voor</Label>

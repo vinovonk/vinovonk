@@ -167,7 +167,7 @@ function generateWineMarkdown(note: TastingNote, index: number): string {
 
   // Score
   if (note.score !== undefined) {
-    lines.push(`**Score:** ${note.score}/100`);
+    lines.push(`**Score:** ${note.score}/10`);
     lines.push('');
   }
 
@@ -197,7 +197,7 @@ function generateReviewSchema(note: TastingNote, wine: WsetWineTasting): string 
     wine.jaargang != null ? (wine.jaargang === 0 ? 'NV' : String(wine.jaargang)) : null,
   ].filter(Boolean).join(' ');
 
-  const ratingValue = Math.round((note.score / 10) * 10) / 10; // 0-100 → 0-10, één decimaal
+  const ratingValue = note.score; // 1-10 schaal
 
   const reviewDate = wine.details?.proefdatum || new Date().toISOString().split('T')[0];
 
