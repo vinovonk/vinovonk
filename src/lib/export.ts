@@ -171,7 +171,83 @@ function generateWineMarkdown(note: TastingNote, index: number): string {
     lines.push('');
   }
 
+  // Review schema JSON-LD (klaar voor Divi Code module)
+  const schema = generateReviewSchema(note, wine);
+  if (schema) {
+    lines.push('### 📋 Review Schema — plak in Divi Code module');
+    lines.push('');
+    lines.push('```json');
+    lines.push(schema);
+    lines.push('```');
+    lines.push('');
+    lines.push('> ⚠️ Vul `YOUR_ARTICLE_URL` in met de echte URL van het artikel.');
+    lines.push('');
+  }
+
   return lines.join('\n');
+}
+
+function generateReviewSchema(note: TastingNote, wine: WsetWineTasting): string | null {
+  if (note.score === undefined || note.score === null) return null;
+  if (!wine.wijnNaam) return null;
+
+  const productName = [
+    wine.producent,
+    wine.wijnNaam,
+    wine.jaargang != null ? (wine.jaargang === 0 ? 'NV' : String(wine.jaargang)) : null,
+  ].filter(Boolean).join(' ');
+
+  const ratingValue = Math.round((note.score / 10) * 10) / 10; // 0-100 → 0-10, één decimaal
+
+  const reviewDate = wine.details?.proefdatum || new Date().toISOString().split('T')[0];
+
+  // Reviewtekst: persoonlijke notitie of automatisch samengesteld
+  let reviewBody = note.persoonlijkeNotitie?.trim() || '';
+  if (!reviewBody) {
+    const parts: string[] = [];
+    if (wine.conclusie.kwaliteit) parts.push(`Quality: ${label(wine.conclusie.kwaliteit)}.`);
+    const primair = wine.neus.aromaKenmerken.primair;
+    if (primair.length > 0) parts.push(`Nose: ${primair.join(', ')}.`);
+    if (wine.gehemelte.afdronk.lengte) parts.push(`Finish: ${label(wine.gehemelte.afdronk.lengte)}.`);
+    reviewBody = parts.join(' ');
+  }
+
+  const productDescription = [
+    wine.druivenras?.join(', '),
+    [wine.regio, wine.land].filter(Boolean).join(', '),
+    wine.prijs ? `€${wine.prijs}` : null,
+  ].filter(Boolean).join(' | ');
+
+  const schema: Record<string, unknown> = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: productName,
+    ...(productDescription ? { description: productDescription } : {}),
+    review: {
+      '@type': 'Review',
+      url: 'YOUR_ARTICLE_URL',
+      reviewRating: {
+        '@type': 'Rating',
+        ratingValue,
+        bestRating: 10,
+        worstRating: 0,
+      },
+      author: {
+        '@type': 'Person',
+        '@id': 'https://vinovonk.com/#/schema/person/9a09e3400e964b740ea7a14d0db846a1',
+        name: 'Jeroen Vonk',
+      },
+      publisher: {
+        '@type': 'Organization',
+        '@id': 'https://vinovonk.com/#organization',
+        name: 'VinoVonk',
+      },
+      datePublished: reviewDate,
+      ...(reviewBody ? { reviewBody } : {}),
+    },
+  };
+
+  return `<script type="application/ld+json">\n${JSON.stringify(schema, null, 2)}\n</script>`;
 }
 
 export function generateSessionMarkdown(session: TastingSession): string {
